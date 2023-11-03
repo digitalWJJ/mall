@@ -32,6 +32,7 @@
         <mybatis-spring-boot-starter.version>2.1.1</mybatis-spring-boot-starter.version>
         <hutool-captcha.version>5.8.4</hutool-captcha.version>
         <mysql-connector-java.version>8.0.29</mysql-connector-java.version>
+        <mybatis.version>3.5.10</mybatis.version>
         <mybatis-generator.version>1.4.1</mybatis-generator.version>
     </properties>
     <dependencies>
@@ -68,6 +69,13 @@
                 <version>${mybatis-generator.version}</version>
             </dependency>
 
+            <!-- MyBatis-->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -88,7 +96,7 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql-connector-java.version}</version>
-                <scope>test</scope>
+<!--                <scope>test</scope>-->
             </dependency>
 
             <dependency>

@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ouc.mallmbg.mapper.ProductMapper">
+  <resultMap id="BaseResultMap" type="com.ouc.mallmbg.model.Product">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_description" jdbcType="VARCHAR" property="productDescription" />
+    <result column="product_price" jdbcType="DECIMAL" property="productPrice" />
+    <result column="configuration" jdbcType="VARCHAR" property="configuration" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
+    <result column="product_image1" jdbcType="VARCHAR" property="productImage1" />
+    <result column="product_image2" jdbcType="VARCHAR" property="productImage2" />
+    <result column="product_image3" jdbcType="VARCHAR" property="productImage3" />
+    <result column="product_image4" jdbcType="VARCHAR" property="productImage4" />
+    <result column="product_image5" jdbcType="VARCHAR" property="productImage5" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, product_name, product_description, product_price, configuration, color, product_image1, 
+    product_image2, product_image3, product_image4, product_image5
+  </sql>
+  <select id="selectByExample" parameterType="com.ouc.mallmbg.model.ProductExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from product
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from product
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ouc.mallmbg.model.ProductExample">
+    delete from product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ouc.mallmbg.model.Product">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into product (product_name, product_description, 
+      product_price, configuration, color, 
+      product_image1, product_image2, product_image3, 
+      product_image4, product_image5)
+    values (#{productName,jdbcType=VARCHAR}, #{productDescription,jdbcType=VARCHAR}, 
+      #{productPrice,jdbcType=DECIMAL}, #{configuration,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, 
+      #{productImage1,jdbcType=VARCHAR}, #{productImage2,jdbcType=VARCHAR}, #{productImage3,jdbcType=VARCHAR}, 
+      #{productImage4,jdbcType=VARCHAR}, #{productImage5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ouc.mallmbg.model.Product">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="productDescription != null">
+        product_description,
+      </if>
+      <if test="productPrice != null">
+        product_price,
+      </if>
+      <if test="configuration != null">
+        configuration,
+      </if>
+      <if test="color != null">
+        color,
+      </if>
+      <if test="productImage1 != null">
+        product_image1,
+      </if>
+      <if test="productImage2 != null">
+        product_image2,
+      </if>
+      <if test="productImage3 != null">
+        product_image3,
+      </if>
+      <if test="productImage4 != null">
+        product_image4,
+      </if>
+      <if test="productImage5 != null">
+        product_image5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDescription != null">
+        #{productDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null">
+        #{productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="configuration != null">
+        #{configuration,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="productImage1 != null">
+        #{productImage1,jdbcType=VARCHAR},
+      </if>
+      <if test="productImage2 != null">
+        #{productImage2,jdbcType=VARCHAR},
+      </if>
+      <if test="productImage3 != null">
+        #{productImage3,jdbcType=VARCHAR},
+      </if>
+      <if test="productImage4 != null">
+        #{productImage4,jdbcType=VARCHAR},
+      </if>
+      <if test="productImage5 != null">
+        #{productImage5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ouc.mallmbg.model.ProductExample" resultType="java.lang.Long">
+    select count(*) from product
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update product
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=VARCHAR},
+      </if>
+      <if test="row.productName != null">
+        product_name = #{row.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="row.productDescription != null">
+        product_description = #{row.productDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="row.productPrice != null">
+        product_price = #{row.productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="row.configuration != null">
+        configuration = #{row.configuration,jdbcType=VARCHAR},
+      </if>
+      <if test="row.color != null">
+        color = #{row.color,jdbcType=VARCHAR},
+      </if>
+      <if test="row.productImage1 != null">
+        product_image1 = #{row.productImage1,jdbcType=VARCHAR},
+      </if>
+      <if test="row.productImage2 != null">
+        product_image2 = #{row.productImage2,jdbcType=VARCHAR},
+      </if>
+      <if test="row.productImage3 != null">
+        product_image3 = #{row.productImage3,jdbcType=VARCHAR},
+      </if>
+      <if test="row.productImage4 != null">
+        product_image4 = #{row.productImage4,jdbcType=VARCHAR},
+      </if>
+      <if test="row.productImage5 != null">
+        product_image5 = #{row.productImage5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update product
+    set id = #{row.id,jdbcType=VARCHAR},
+      product_name = #{row.productName,jdbcType=VARCHAR},
+      product_description = #{row.productDescription,jdbcType=VARCHAR},
+      product_price = #{row.productPrice,jdbcType=DECIMAL},
+      configuration = #{row.configuration,jdbcType=VARCHAR},
+      color = #{row.color,jdbcType=VARCHAR},
+      product_image1 = #{row.productImage1,jdbcType=VARCHAR},
+      product_image2 = #{row.productImage2,jdbcType=VARCHAR},
+      product_image3 = #{row.productImage3,jdbcType=VARCHAR},
+      product_image4 = #{row.productImage4,jdbcType=VARCHAR},
+      product_image5 = #{row.productImage5,jdbcType=VARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ouc.mallmbg.model.Product">
+    update product
+    <set>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDescription != null">
+        product_description = #{productDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null">
+        product_price = #{productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="configuration != null">
+        configuration = #{configuration,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        color = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="productImage1 != null">
+        product_image1 = #{productImage1,jdbcType=VARCHAR},
+      </if>
+      <if test="productImage2 != null">
+        product_image2 = #{productImage2,jdbcType=VARCHAR},
+      </if>
+      <if test="productImage3 != null">
+        product_image3 = #{productImage3,jdbcType=VARCHAR},
+      </if>
+      <if test="productImage4 != null">
+        product_image4 = #{productImage4,jdbcType=VARCHAR},
+      </if>
+      <if test="productImage5 != null">
+        product_image5 = #{productImage5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ouc.mallmbg.model.Product">
+    update product
+    set product_name = #{productName,jdbcType=VARCHAR},
+      product_description = #{productDescription,jdbcType=VARCHAR},
+      product_price = #{productPrice,jdbcType=DECIMAL},
+      configuration = #{configuration,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
+      product_image1 = #{productImage1,jdbcType=VARCHAR},
+      product_image2 = #{productImage2,jdbcType=VARCHAR},
+      product_image3 = #{productImage3,jdbcType=VARCHAR},
+      product_image4 = #{productImage4,jdbcType=VARCHAR},
+      product_image5 = #{productImage5,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
