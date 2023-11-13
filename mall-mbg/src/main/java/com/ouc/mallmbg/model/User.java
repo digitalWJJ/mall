@@ -21,6 +21,8 @@ public class User implements Serializable {
 
     private Boolean isRoot;
 
+    private String category;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -95,6 +97,14 @@ public class User implements Serializable {
         this.isRoot = isRoot;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -110,6 +120,7 @@ public class User implements Serializable {
         sb.append(", phoneNumber=").append(phoneNumber);
         sb.append(", stateMessage=").append(stateMessage);
         sb.append(", isRoot=").append(isRoot);
+        sb.append(", category=").append(category);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

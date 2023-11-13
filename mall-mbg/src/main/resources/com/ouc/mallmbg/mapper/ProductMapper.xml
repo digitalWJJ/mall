@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ouc.mallmbg.mapper.ProductMapper">
   <resultMap id="BaseResultMap" type="com.ouc.mallmbg.model.Product">
-    <id column="id" jdbcType="VARCHAR" property="id" />
+    <id column="id" jdbcType="INTEGER" property="id" />
     <result column="product_name" jdbcType="VARCHAR" property="productName" />
     <result column="product_description" jdbcType="VARCHAR" property="productDescription" />
     <result column="product_price" jdbcType="DECIMAL" property="productPrice" />
@@ -13,6 +13,7 @@
     <result column="product_image3" jdbcType="VARCHAR" property="productImage3" />
     <result column="product_image4" jdbcType="VARCHAR" property="productImage4" />
     <result column="product_image5" jdbcType="VARCHAR" property="productImage5" />
+    <result column="category" jdbcType="CHAR" property="category" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -74,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, product_name, product_description, product_price, configuration, color, product_image1, 
-    product_image2, product_image3, product_image4, product_image5
+    product_image2, product_image3, product_image4, product_image5, category
   </sql>
   <select id="selectByExample" parameterType="com.ouc.mallmbg.model.ProductExample" resultMap="BaseResultMap">
     select
@@ -90,15 +91,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from product
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from product
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.ouc.mallmbg.model.ProductExample">
     delete from product
@@ -107,20 +108,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.ouc.mallmbg.model.Product">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into product (product_name, product_description, 
       product_price, configuration, color, 
       product_image1, product_image2, product_image3, 
-      product_image4, product_image5)
+      product_image4, product_image5, category
+      )
     values (#{productName,jdbcType=VARCHAR}, #{productDescription,jdbcType=VARCHAR}, 
       #{productPrice,jdbcType=DECIMAL}, #{configuration,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, 
       #{productImage1,jdbcType=VARCHAR}, #{productImage2,jdbcType=VARCHAR}, #{productImage3,jdbcType=VARCHAR}, 
-      #{productImage4,jdbcType=VARCHAR}, #{productImage5,jdbcType=VARCHAR})
+      #{productImage4,jdbcType=VARCHAR}, #{productImage5,jdbcType=VARCHAR}, #{category,jdbcType=CHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ouc.mallmbg.model.Product">
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into product
@@ -155,6 +158,9 @@
       <if test="productImage5 != null">
         product_image5,
       </if>
+      <if test="category != null">
+        category,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="productName != null">
@@ -187,6 +193,9 @@
       <if test="productImage5 != null">
         #{productImage5,jdbcType=VARCHAR},
       </if>
+      <if test="category != null">
+        #{category,jdbcType=CHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.ouc.mallmbg.model.ProductExample" resultType="java.lang.Long">
@@ -199,7 +208,7 @@
     update product
     <set>
       <if test="row.id != null">
-        id = #{row.id,jdbcType=VARCHAR},
+        id = #{row.id,jdbcType=INTEGER},
       </if>
       <if test="row.productName != null">
         product_name = #{row.productName,jdbcType=VARCHAR},
@@ -231,6 +240,9 @@
       <if test="row.productImage5 != null">
         product_image5 = #{row.productImage5,jdbcType=VARCHAR},
       </if>
+      <if test="row.category != null">
+        category = #{row.category,jdbcType=CHAR},
+      </if>
     </set>
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -238,7 +250,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update product
-    set id = #{row.id,jdbcType=VARCHAR},
+    set id = #{row.id,jdbcType=INTEGER},
       product_name = #{row.productName,jdbcType=VARCHAR},
       product_description = #{row.productDescription,jdbcType=VARCHAR},
       product_price = #{row.productPrice,jdbcType=DECIMAL},
@@ -248,7 +260,8 @@
       product_image2 = #{row.productImage2,jdbcType=VARCHAR},
       product_image3 = #{row.productImage3,jdbcType=VARCHAR},
       product_image4 = #{row.productImage4,jdbcType=VARCHAR},
-      product_image5 = #{row.productImage5,jdbcType=VARCHAR}
+      product_image5 = #{row.productImage5,jdbcType=VARCHAR},
+      category = #{row.category,jdbcType=CHAR}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -286,8 +299,11 @@
       <if test="productImage5 != null">
         product_image5 = #{productImage5,jdbcType=VARCHAR},
       </if>
+      <if test="category != null">
+        category = #{category,jdbcType=CHAR},
+      </if>
     </set>
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ouc.mallmbg.model.Product">
     update product
@@ -300,7 +316,8 @@
       product_image2 = #{productImage2,jdbcType=VARCHAR},
       product_image3 = #{productImage3,jdbcType=VARCHAR},
       product_image4 = #{productImage4,jdbcType=VARCHAR},
-      product_image5 = #{productImage5,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=VARCHAR}
+      product_image5 = #{productImage5,jdbcType=VARCHAR},
+      category = #{category,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

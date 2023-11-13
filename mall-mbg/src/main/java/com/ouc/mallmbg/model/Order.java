@@ -25,7 +25,7 @@ public class Order implements Serializable {
 
     private String phoneNumber;
 
-    private String category;
+    private String configuration;
 
     private static final long serialVersionUID = 1L;
 
@@ -109,12 +109,12 @@ public class Order implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getCategory() {
-        return category;
+    public String getConfiguration() {
+        return configuration;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setConfiguration(String configuration) {
+        this.configuration = configuration;
     }
 
     @Override
@@ -133,7 +133,7 @@ public class Order implements Serializable {
         sb.append(", status=").append(status);
         sb.append(", address=").append(address);
         sb.append(", phoneNumber=").append(phoneNumber);
-        sb.append(", category=").append(category);
+        sb.append(", configuration=").append(configuration);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

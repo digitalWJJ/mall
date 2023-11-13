@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 public class Product implements Serializable {
-    private String id;
+    private Integer id;
 
     private String productName;
 
@@ -26,13 +26,15 @@ public class Product implements Serializable {
 
     private String productImage5;
 
+    private String category;
+
     private static final long serialVersionUID = 1L;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -116,6 +118,14 @@ public class Product implements Serializable {
         this.productImage5 = productImage5;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -133,6 +143,7 @@ public class Product implements Serializable {
         sb.append(", productImage3=").append(productImage3);
         sb.append(", productImage4=").append(productImage4);
         sb.append(", productImage5=").append(productImage5);
+        sb.append(", category=").append(category);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

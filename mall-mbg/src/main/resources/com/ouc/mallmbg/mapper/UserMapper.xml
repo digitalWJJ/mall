@@ -11,6 +11,7 @@
     <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
     <result column="state_message" jdbcType="VARCHAR" property="stateMessage" />
     <result column="is_root" jdbcType="BIT" property="isRoot" />
+    <result column="category" jdbcType="CHAR" property="category" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,7 +73,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, user_name, user_pwd, user_email, user_image, gender, phone_number, state_message, 
-    is_root
+    is_root, category
   </sql>
   <select id="selectByExample" parameterType="com.ouc.mallmbg.model.UserExample" resultMap="BaseResultMap">
     select
@@ -110,10 +111,12 @@
     </selectKey>
     insert into user (user_name, user_pwd, user_email, 
       user_image, gender, phone_number, 
-      state_message, is_root)
+      state_message, is_root, category
+      )
     values (#{userName,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, 
       #{userImage,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
-      #{stateMessage,jdbcType=VARCHAR}, #{isRoot,jdbcType=BIT})
+      #{stateMessage,jdbcType=VARCHAR}, #{isRoot,jdbcType=BIT}, #{category,jdbcType=CHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ouc.mallmbg.model.User">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -145,6 +148,9 @@
       <if test="isRoot != null">
         is_root,
       </if>
+      <if test="category != null">
+        category,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userName != null">
@@ -170,6 +176,9 @@
       </if>
       <if test="isRoot != null">
         #{isRoot,jdbcType=BIT},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -209,6 +218,9 @@
       <if test="row.isRoot != null">
         is_root = #{row.isRoot,jdbcType=BIT},
       </if>
+      <if test="row.category != null">
+        category = #{row.category,jdbcType=CHAR},
+      </if>
     </set>
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -224,7 +236,8 @@
       gender = #{row.gender,jdbcType=CHAR},
       phone_number = #{row.phoneNumber,jdbcType=VARCHAR},
       state_message = #{row.stateMessage,jdbcType=VARCHAR},
-      is_root = #{row.isRoot,jdbcType=BIT}
+      is_root = #{row.isRoot,jdbcType=BIT},
+      category = #{row.category,jdbcType=CHAR}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -256,6 +269,9 @@
       <if test="isRoot != null">
         is_root = #{isRoot,jdbcType=BIT},
       </if>
+      <if test="category != null">
+        category = #{category,jdbcType=CHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -268,7 +284,8 @@
       gender = #{gender,jdbcType=CHAR},
       phone_number = #{phoneNumber,jdbcType=VARCHAR},
       state_message = #{stateMessage,jdbcType=VARCHAR},
-      is_root = #{isRoot,jdbcType=BIT}
+      is_root = #{isRoot,jdbcType=BIT},
+      category = #{category,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
