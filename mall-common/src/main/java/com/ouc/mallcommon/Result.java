@@ -2,9 +2,7 @@ package com.ouc.mallcommon;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,5 +31,5 @@ public class Result {
     public static Result result(int code, String msg, Object data){
         return new Result(code,msg,data);
     }
-
+    // 测试git
 }
