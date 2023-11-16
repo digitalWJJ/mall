@@ -12,6 +12,7 @@
     <result column="status" jdbcType="CHAR" property="status" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
     <result column="configuration" jdbcType="VARCHAR" property="configuration" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -74,7 +75,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, receiver_name, commit_time, user_id, product_id, total_price, amount, status, 
-    address, phone_number, configuration
+    address, phone_number, color, configuration
   </sql>
   <select id="selectByExample" parameterType="com.ouc.mallmbg.model.OrderExample" resultMap="BaseResultMap">
     select
@@ -113,11 +114,11 @@
     insert into order (receiver_name, commit_time, user_id, 
       product_id, total_price, amount, 
       status, address, phone_number, 
-      configuration)
+      color, configuration)
     values (#{receiverName,jdbcType=VARCHAR}, #{commitTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, 
       #{productId,jdbcType=INTEGER}, #{totalPrice,jdbcType=DECIMAL}, #{amount,jdbcType=INTEGER}, 
       #{status,jdbcType=CHAR}, #{address,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
-      #{configuration,jdbcType=VARCHAR})
+      #{color,jdbcType=VARCHAR}, #{configuration,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ouc.mallmbg.model.Order">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -152,6 +153,9 @@
       <if test="phoneNumber != null">
         phone_number,
       </if>
+      <if test="color != null">
+        color,
+      </if>
       <if test="configuration != null">
         configuration,
       </if>
@@ -183,6 +187,9 @@
       </if>
       <if test="phoneNumber != null">
         #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        #{color,jdbcType=VARCHAR},
       </if>
       <if test="configuration != null">
         #{configuration,jdbcType=VARCHAR},
@@ -228,6 +235,9 @@
       <if test="row.phoneNumber != null">
         phone_number = #{row.phoneNumber,jdbcType=VARCHAR},
       </if>
+      <if test="row.color != null">
+        color = #{row.color,jdbcType=VARCHAR},
+      </if>
       <if test="row.configuration != null">
         configuration = #{row.configuration,jdbcType=VARCHAR},
       </if>
@@ -248,6 +258,7 @@
       status = #{row.status,jdbcType=CHAR},
       address = #{row.address,jdbcType=VARCHAR},
       phone_number = #{row.phoneNumber,jdbcType=VARCHAR},
+      color = #{row.color,jdbcType=VARCHAR},
       configuration = #{row.configuration,jdbcType=VARCHAR}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -283,6 +294,9 @@
       <if test="phoneNumber != null">
         phone_number = #{phoneNumber,jdbcType=VARCHAR},
       </if>
+      <if test="color != null">
+        color = #{color,jdbcType=VARCHAR},
+      </if>
       <if test="configuration != null">
         configuration = #{configuration,jdbcType=VARCHAR},
       </if>
@@ -300,6 +314,7 @@
       status = #{status,jdbcType=CHAR},
       address = #{address,jdbcType=VARCHAR},
       phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
       configuration = #{configuration,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

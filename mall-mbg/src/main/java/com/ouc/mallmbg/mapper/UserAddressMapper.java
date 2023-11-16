@@ -3,10 +3,8 @@ package com.ouc.mallmbg.mapper;
 import com.ouc.mallmbg.model.UserAddress;
 import com.ouc.mallmbg.model.UserAddressExample;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-@Mapper
+
 public interface UserAddressMapper {
     long countByExample(UserAddressExample example);
 

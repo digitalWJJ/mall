@@ -25,6 +25,8 @@ public class Order implements Serializable {
 
     private String phoneNumber;
 
+    private String color;
+
     private String configuration;
 
     private static final long serialVersionUID = 1L;
@@ -109,6 +111,14 @@ public class Order implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     public String getConfiguration() {
         return configuration;
     }
@@ -133,6 +143,7 @@ public class Order implements Serializable {
         sb.append(", status=").append(status);
         sb.append(", address=").append(address);
         sb.append(", phoneNumber=").append(phoneNumber);
+        sb.append(", color=").append(color);
         sb.append(", configuration=").append(configuration);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

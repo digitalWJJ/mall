@@ -3,10 +3,8 @@ package com.ouc.mallmbg.mapper;
 import com.ouc.mallmbg.model.Order;
 import com.ouc.mallmbg.model.OrderExample;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-@Mapper
+
 public interface OrderMapper {
     long countByExample(OrderExample example);
 
