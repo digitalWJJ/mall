@@ -6,12 +6,14 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.ouc.mallcommon.AuthAccess;
 import com.ouc.mallcommon.exception.ServiceException;
 import com.ouc.mallmbg.mapper.UserMapper;
 import com.ouc.mallmbg.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 
@@ -22,7 +24,11 @@ public class JwtInterceptor implements HandlerInterceptor {
     UserMapper userMapper;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        if(handler instanceof HandlerMethod){
+            if( ((HandlerMethod) handler).getMethodAnnotation(AuthAccess.class) != null) return true;
+        }
+
         String accessToken = request.getHeader("Authorization").replace("Bearer",""); // 拿到认证token
         // 验证token是否为空
         if(StrUtil.isBlank(accessToken)){
