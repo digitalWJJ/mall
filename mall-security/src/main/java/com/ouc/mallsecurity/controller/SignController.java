@@ -1,5 +1,6 @@
 package com.ouc.mallsecurity.controller;
 
+import com.ouc.mallcommon.AuthAccess;
 import com.ouc.mallcommon.Result;
 import com.ouc.mallmbg.mapper.UserMapper;
 //import com.ouc.mallsecurity.model.CodeModel;
@@ -24,6 +25,7 @@ public class SignController {
     * 测试邮箱验证码功能
     * */
     @GetMapping("/getEmailCode")
+    @AuthAccess
     public Result getEmailCode(@RequestParam("email") String email){
         System.out.println(email);
         signService.sendEmailCode(email);
