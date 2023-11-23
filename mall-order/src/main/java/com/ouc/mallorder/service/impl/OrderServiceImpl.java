@@ -36,7 +36,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> confirmBuyOrder(int userId) {
-        OrderExample orderExample=new OrderExample();
-        OrderExample.Criteria criteria=
+//        OrderExample orderExample=new OrderExample();
+//        OrderExample.Criteria criteria=OrderMapper.
+        return null;
     }
 }
