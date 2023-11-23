@@ -12,7 +12,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>mall-mbg</name>
     <description>mall-mbg</description>
-    <packaging>jar</packaging>
 
     <dependencies>
         <!-- MyBatis-->
@@ -32,7 +31,6 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>
