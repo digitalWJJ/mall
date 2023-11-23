@@ -16,19 +16,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-
-
 public class JwtInterceptor implements HandlerInterceptor {
 
-    @Autowired
-    UserMapper userMapper;
 
+    @Autowired
+    private UserMapper userMapper;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         if(handler instanceof HandlerMethod){
             if( ((HandlerMethod) handler).getMethodAnnotation(AuthAccess.class) != null) return true;
         }
-
+        System.out.println(userMapper==null);
         String accessToken = request.getHeader("Authorization").replace("Bearer",""); // 拿到认证token
         // 验证token是否为空
         if(StrUtil.isBlank(accessToken)){
