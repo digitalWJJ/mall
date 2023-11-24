@@ -1,4 +1,4 @@
-package com.ouc.mallsecurity.config.config;
+package com.ouc.mallsecurity.config;
 
 
 import com.ouc.mallsecurity.interceptor.JwtInterceptor;
