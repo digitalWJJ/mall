@@ -1,0 +1,43 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: mall-demo
+  datasource:
+    url: jdbc:mysql://localhost:3306/mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: 046110wjj1
+  thymeleaf:
+    mode: HTML5
+    encoding: utf-8
+    servlet:
+      content-type: text/html
+    cache: false #???????,??????????
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  mail:
+    email: "2568840553@qq.com"
+    host: "smtp.qq.com"
+    port: 465
+    username: "2568840553"
+    password: "uexvigssikuxdidb"
+
+code:
+  expiration: 300
+
+mybatis:
+  mapper-locations:
+    - classpath:mapper/*.xml
+    - classpath*:com/**/mapper/*.xml
+
+logging:
+  level:
+    root: info
+    com.macro.mall: debug
+
+host:
+  mall:
+    admin: http://localhost:8080
+

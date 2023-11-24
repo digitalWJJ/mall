@@ -30,13 +30,17 @@
     <properties>
         <java.version>17</java.version>
         <spring-boot-starter-web.version>3.1.4</spring-boot-starter-web.version>
-        <mybatis-spring-boot-starter.version>2.1.1</mybatis-spring-boot-starter.version>
+        <mybatis-spring-boot-starter.version>3.0.2</mybatis-spring-boot-starter.version>
         <hutool-captcha.version>5.8.4</hutool-captcha.version>
+        <hutool-all.version>5.8.20</hutool-all.version>
         <mysql-connector-java.version>8.0.29</mysql-connector-java.version>
         <mybatis.version>3.5.10</mybatis.version>
         <mybatis-generator.version>1.4.1</mybatis-generator.version>
         <lombok.version>1.18.24</lombok.version>
         <jwt.version>4.3.0</jwt.version>
+        <javax-mail.version>1.6.2</javax-mail.version>
+        <spring-boot-starter-freemarker.version>3.1.5</spring-boot-starter-freemarker.version>
+        <spring-boot-starter-data-redis.version>3.1.5</spring-boot-starter-data-redis.version>
     </properties>
     <dependencies>
         <dependency>
@@ -93,6 +97,26 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-captcha</artifactId>
                 <version>${hutool-captcha.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool-all.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>javax.mail</artifactId>
+                <version>${javax-mail.version}</version>
+            </dependency>
+
+            <!-- spring-boot-starter-freemarker 生成邮件模板的辅助工具 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-freemarker</artifactId>
+                <version>${spring-boot-starter-freemarker.version}</version>
             </dependency>
 
             <dependency>
