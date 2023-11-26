@@ -33,7 +33,7 @@ public class EmailServiceImpl implements EmailService {
         account.setHost(host);
         account.setPort(Integer.parseInt(port));
         // 设置发送人邮箱
-        account.setFrom(username + "<" + email + ">" );
+        account.setFrom(email);
         // 设置发送人名称
         account.setUser(username);
         // 设置发送授权码
