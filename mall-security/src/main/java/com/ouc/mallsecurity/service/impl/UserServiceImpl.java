@@ -25,9 +25,10 @@ public class UserServiceImpl implements UserService {
     public User findByUserEmail(String email){
         UserExample userExample = new UserExample();
         userExample.createCriteria().andUserEmailEqualTo(email);
-        User user = (User) userMapper.selectByExample(userExample);
-        if(ObjUtil.isEmpty(user)) throw new ServiceException(406, "该用户不存在");
-        return user;
+        List<User> result = userMapper.selectByExample(userExample);
+        if( result.size() == 1) return result.get(0);
+        else if(result.size() == 0) throw new ServiceException(406, "该用户不存在");
+        else throw new ServiceException(500, "数据库用户信息错误");
     }
 
     @Override
