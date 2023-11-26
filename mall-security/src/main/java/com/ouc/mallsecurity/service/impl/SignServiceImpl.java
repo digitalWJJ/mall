@@ -60,17 +60,18 @@ public class SignServiceImpl implements SignService {
     }
 
     @Override
+    @GenToken
     public String signInByPwd(PwdModel pwdModel) {
-        // 检验密码和确认密码是否一致
-        if( !StrUtil.equals(pwdModel.getPwd(), pwdModel.getConfirmPwd()) ) throw new ServiceException(401,"密码不一致");
+
         // 判断密码是否和数据库中的一致
         User user = userService.findByUserEmail(pwdModel.getEmail());
         if( !StrUtil.equals(user.getUserPwd(), pwdModel.getPwd()) ) throw new ServiceException(401, "账户名或者密码错误");
         // 生成token
-        return TokenUtils.genToken(String.valueOf(user.getId()), user.getUserPwd());
+        return user.getId() + "-" + user.getUserPwd();
     }
 
     @Override
+    @GenToken
     public String signInByCode(CodeModel codeModel) {
         // 通过 email 获取缓存中的code
         String codeCache = (String) RedisUtils.get(codeModel.getEmail());
@@ -83,7 +84,7 @@ public class SignServiceImpl implements SignService {
         // 获取对应的user
         User user = userService.findByUserEmail(codeModel.getEmail());
         // 生成token
-        return TokenUtils.genToken(String.valueOf(user.getId()), user.getUserPwd());
+        return user.getId() + "-" + user.getUserPwd();
     }
 
     @Override
