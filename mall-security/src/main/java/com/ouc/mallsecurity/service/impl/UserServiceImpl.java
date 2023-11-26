@@ -6,10 +6,10 @@ import com.ouc.mallmbg.mapper.UserMapper;
 import com.ouc.mallmbg.model.User;
 import com.ouc.mallmbg.model.UserExample;
 import com.ouc.mallsecurity.service.UserService;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -41,7 +41,19 @@ public class UserServiceImpl implements UserService {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andUserEmailEqualTo(userEmail);
         userExample.createCriteria().andUserPwdEqualTo(userPwd);
-        User result = (User) userMapper.selectByExample(userExample);
-        return result != null;
+        int count = userMapper.selectByExample(userExample).size();
+        if( count == 0 )  return false;
+        else if(count == 1) return true;
+        else throw new ServiceException(500, "数据库用户信息错误");
+    }
+
+    @Override
+    public boolean isUserExist(String email) {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andUserEmailEqualTo(email);
+        int count = userMapper.selectByExample(userExample).size();
+        if( count == 0 )  return false;
+        else if(count == 1) return true;
+        else throw new ServiceException(500, "数据库用户信息错误");
     }
 }
