@@ -1,18 +1,14 @@
-package com.ouc.mallproduct;
+package com.ouc.mallorder;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.BeforeClass;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.Reader;
 
-@Transactional
-@Rollback
 public class BaseMapperTest {
     private static SqlSessionFactory sqlSessionFactory;
     @BeforeClass

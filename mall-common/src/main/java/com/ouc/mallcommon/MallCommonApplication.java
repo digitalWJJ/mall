@@ -1,12 +1,11 @@
-package com.ouc.mallproduct;
+package com.ouc.mallcommon;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MallProductApplication {
+public class MallCommonApplication {
     public static void main(String[] args) {
-        SpringApplication.run(MallProductApplication.class, args);
+        SpringApplication.run(MallCommonApplication.class, args);
     }
-
 }
