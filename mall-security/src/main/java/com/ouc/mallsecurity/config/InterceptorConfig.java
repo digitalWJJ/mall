@@ -18,6 +18,7 @@ public class InterceptorConfig extends WebMvcConfigurationSupport {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/login")
                 .excludePathPatterns("/signup");
+//                .excludePathPatterns("/**");
         super.addInterceptors(registry);
     }
 
