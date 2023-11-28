@@ -103,6 +103,30 @@ public class SignServiceImpl implements SignService {
         user.setUserName(signModel.getEmail());
         user.setUserEmail(signModel.getEmail());
         user.setUserPwd(signModel.getPwd());
+        user.setIsRoot(false);
+        // 向数据库中添加一个新用户
+        userService.addUser(user);
+    }
+
+    @Override
+    public void signUpAdmin(SignModel signModel) {
+        // 通过 email 获取缓存中的code
+        String codeCache = (String) RedisUtils.get(signModel.getEmail());
+        if(StrUtil.isBlank(codeCache) || !StrUtil.equals(codeCache, signModel.getCode())){
+            throw new ServiceException(401, "无效验证码");
+        }
+        else {
+            RedisUtils.del(signModel.getEmail());
+        }
+
+        // 检查数据库中是否已经存在该用户
+        if(userService.isUserExist(signModel.getEmail())) throw new ServiceException(401,"该用户已存在");
+        // 新建一个用户 并赋予最基本的信息
+        User user = new User();
+        user.setUserName(signModel.getEmail());
+        user.setUserEmail(signModel.getEmail());
+        user.setUserPwd(signModel.getPwd());
+        user.setIsRoot(true);
         // 向数据库中添加一个新用户
         userService.addUser(user);
     }

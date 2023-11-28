@@ -31,9 +31,16 @@ public interface SignService {
     String signInByCode(CodeModel codeModel);
 
     /**
-     * 注册
+     * 普通用户注册
      *
      * @param signModel 注册对象
      * */
     void signUp(SignModel signModel);
+
+    /**
+     * 管理员用户注册
+     *
+     * @param signModel 注册对象
+     * */
+    void signUpAdmin(SignModel signModel);
 }
