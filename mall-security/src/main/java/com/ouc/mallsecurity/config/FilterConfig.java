@@ -11,6 +11,19 @@ import org.springframework.context.annotation.Configuration;
 public class FilterConfig {
 
     /**
+     * 处理 filter 中的错误路由的页面
+     *
+     */
+    @Bean
+    public FilterRegistrationBean<ExceptionFilter> exceptionFilter() {
+        FilterRegistrationBean<ExceptionFilter> bean = new FilterRegistrationBean<>();
+        bean.setName("exceptionFilter");
+        bean.setOrder(0); // 这里要尽可能地小, 在所有的 filter 之前执行
+        bean.setFilter(new ExceptionFilter());
+        return bean;
+    }
+
+    /**
      * 解决跨域问题的 filter的配置
      * */
     @Bean
