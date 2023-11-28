@@ -1,11 +1,11 @@
-package com.ouc.mallsecurity;
+package com.ouc.mallcommon;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MallSecurityApplication {
+public class MallCommonApplication {
     public static void main(String[] args) {
-        SpringApplication.run(MallSecurityApplication.class, args);
+        SpringApplication.run(MallCommonApplication.class, args);
     }
 }

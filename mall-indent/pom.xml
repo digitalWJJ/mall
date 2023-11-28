@@ -8,28 +8,36 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>mall-mbg</artifactId>
+    <artifactId>mall-indent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>mall-mbg</name>
-    <description>mall-mbg</description>
+    <name>mall-order</name>
+    <description>mall-order</description>
 
     <dependencies>
-        <!-- MyBatis-->
         <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>${mybatis.version}</version>
+            <groupId>com.ouc</groupId>
+            <artifactId>mall-mbg</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
-
-        <!-- MyBatis 生成器 -->
         <dependency>
-            <groupId>org.mybatis.generator</groupId>
-            <artifactId>mybatis-generator-core</artifactId>
+            <groupId>com.ouc</groupId>
+            <artifactId>mall-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!--Mysql数据库驱动-->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
