@@ -19,6 +19,7 @@ import com.ouc.mallsecurity.model.PwdModel;
 import com.ouc.mallsecurity.model.SignModel;
 import com.ouc.mallsecurity.service.EmailService;
 import com.ouc.mallsecurity.service.SignService;
+import com.ouc.mallsecurity.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,16 +32,11 @@ public class SignServiceImpl implements SignService {
     private Long expiration;
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @Autowired
     private EmailService emailService;
 
-//    @Autowired
-//    public SignServiceImpl(){
-//        this.emailService = new EmailServiceImpl();
-//        this.userService = new UserServiceImpl();
-//    }
 
     @Override
     public void sendEmailCode(String email) {
@@ -52,7 +48,6 @@ public class SignServiceImpl implements SignService {
         if(!RedisUtils.set(email, code, expiration)){
             throw new ServiceException(500,"后台缓存服务异常");
         }
-        System.out.println(code);
 
         emailService.send(new EmailModel(email,"邮箱验证码", template.render(Dict.create().set("code",code))));
     }
@@ -65,7 +60,7 @@ public class SignServiceImpl implements SignService {
         User user = userService.findByUserEmail(pwdModel.getEmail());
         if( !StrUtil.equals(user.getUserPwd(), pwdModel.getPwd()) ) throw new ServiceException(401, "账户名或者密码错误");
         // 生成token
-        return user.getId() + "-" + user.getUserPwd();
+        return user.toString();
     }
 
     @Override
@@ -82,7 +77,7 @@ public class SignServiceImpl implements SignService {
         // 获取对应的user
         User user = userService.findByUserEmail(codeModel.getEmail());
         // 生成token
-        return user.getId() + "-" + user.getUserPwd();
+        return user.toString();
     }
 
     @Override

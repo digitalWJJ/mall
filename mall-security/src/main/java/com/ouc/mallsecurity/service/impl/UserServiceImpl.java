@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(User user){
-        userMapper.insert(user);
+        if( userMapper.insert(user) == 0 ) throw new ServiceException(401, "注册失败");
     }
 
     @Override
