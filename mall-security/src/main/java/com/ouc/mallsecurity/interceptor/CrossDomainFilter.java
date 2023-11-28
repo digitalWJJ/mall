@@ -18,11 +18,18 @@ public class CrossDomainFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
         // 添加参数，允许任意domain访问
-        resp.setHeader("Access-Control-Allow-Origin", "*");
+//        resp.setHeader("Access-Control-Allow-Origin", "*");
         // 这个allow-headers要配为*，这样才能允许所有的请求头 --- update by zxy  in 2018-10-19
+//        resp.setHeader("Access-Control-Allow-Headers", "*");
+//        resp.setHeader("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+//        resp.setHeader("Access-Control-Max-Age", time+"");
+
+        //解决跨域的问题
+        resp.setHeader("Access-Control-Allow-Origin","*");
+        resp.setHeader("Access-Control-Allow-Credentials","true");
         resp.setHeader("Access-Control-Allow-Headers", "*");
         resp.setHeader("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-//        resp.setHeader("Access-Control-Max-Age", time+"");
+        resp.setHeader("Access-Control-Max-Age", "3600");
 
         filterChain.doFilter(servletRequest, resp);
     }
