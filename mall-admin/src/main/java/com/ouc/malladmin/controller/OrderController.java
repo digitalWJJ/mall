@@ -13,43 +13,41 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@RestController
+@RequestMapping(value = "/api/admin/order")
 public class OrderController {
     @Autowired
     OrderMapper orderMapper;
     @Autowired
     OrderServiceImpl orderServiceImpl;
-    @GetMapping("/admin/order/vieworders")
+    @GetMapping("/vieworders")
     public Result vieworders(){
-        Result result = new Result();
         List<Order> orderList = new ArrayList<Order>();
         OrderExample orderExample = new OrderExample();
         orderList = orderServiceImpl.getorders(orderExample);
-        Result.success(orderList);
-        return result;
+        if(orderList==null) {
+            return Result.result(500,"获取订单列表失败",null);
+        }
+        else return Result.success(orderList);
     }
-    @GetMapping("/admin/product/vieworder/{id}")
+    @GetMapping("/vieworder/{id}")
     public Result vieworeder(@PathVariable int id){
-        Result result = new Result();
         Order order = new Order();
         order = orderServiceImpl.getorder(id);
-        Result.success(order);
-        return result;
+        if(order==null) {
+            return Result.result(500,"获取订单信息失败",null);
+        }
+        else return Result.success(order);
     }
-
-    @PutMapping("/admin/product/updateorder/{id}")
+    @PutMapping("/updateorder/{id}")
     public Result updateorder(@RequestBody Order order){
-        Result result = new Result();
         orderServiceImpl.updateorder(order);
-        Result.success();
-        return result;
+        return Result.result(200, "更新成功", null)
     }
-    @DeleteMapping("/admin/product/deleteorder/{id}")
+    @DeleteMapping("/deleteorder/{id}")
     public Result deleteorder(@PathVariable int id){
         orderServiceImpl.deleteorder(id);
-        Result result = new Result();
-        Result.success();
-        return result;
+        return Result.result(200, "删除成功", null);
     }
 
 
