@@ -2,15 +2,12 @@ package com.ouc.malladmin.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.UUID;
 @Component
-public class SaveFileUtils {
+public class SaveFileUtil {
     @Autowired
-    GetType getType;
+    GetTypeUtil getType;
     public String savefile(String productImage){
         if(productImage != null) {
             UUID uuid = UUID.randomUUID();

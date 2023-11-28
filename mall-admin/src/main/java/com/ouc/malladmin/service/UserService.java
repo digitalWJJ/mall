@@ -1,6 +1,5 @@
 package com.ouc.malladmin.service;
 
-import com.ouc.mallmbg.model.Order;
 import com.ouc.mallmbg.model.User;
 import com.ouc.mallmbg.model.UserExample;
 

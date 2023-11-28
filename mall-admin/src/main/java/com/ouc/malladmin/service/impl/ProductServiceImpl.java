@@ -2,26 +2,22 @@ package com.ouc.malladmin.service.impl;
 
 import com.ouc.malladmin.model.ProductModel;
 import com.ouc.malladmin.service.ProductService;
-import com.ouc.malladmin.utils.SaveFileUtils;
+import com.ouc.malladmin.utils.SaveFileUtil;
 import com.ouc.mallmbg.mapper.ProductMapper;
 import com.ouc.mallmbg.model.Product;
 import com.ouc.mallmbg.model.ProductExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import java.io.IOException;
 
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductMapper productMapper;
     @Autowired
-    SaveFileUtils saveFileUtils;
+    SaveFileUtil saveFileUtils;
     @Override
     public void addproduct(ProductModel productModel){
         Product product = new Product();

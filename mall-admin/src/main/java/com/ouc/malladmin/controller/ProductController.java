@@ -2,74 +2,60 @@ package com.ouc.malladmin.controller;
 
 import com.ouc.malladmin.model.ProductModel;
 import com.ouc.malladmin.service.impl.ProductServiceImpl;
-import com.ouc.malladmin.utils.ToMultipartFileUtils;
 import com.ouc.mallcommon.Result;
 import com.ouc.mallmbg.mapper.ProductMapper;
 import com.ouc.mallmbg.model.Product;
 import com.ouc.mallmbg.model.ProductExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@RestController
+@RequestMapping(value = "/api/admin/product")
 public class ProductController {
     @Autowired
     ProductMapper productMapper;
     @Autowired
     ProductServiceImpl productServiceImpl;
-    @Autowired
-    ToMultipartFileUtils toMultipartFileUtils;
 
-    @PostMapping("/admin/product/addproduct")
+    @PostMapping("/addproduct")
     public Result addProduct(@RequestBody ProductModel productModel) {
-        Result result = new Result();
         productServiceImpl.addproduct(productModel);
-        Result.success();
-        return result;
+        return Result.success();
     }
-    @PutMapping("/admin/product/updateproduct/id")
+    @PutMapping("/updateproduct/id")
     public Result updateproduct(@RequestBody ProductModel productModel){
-        Result result = new Result();
         productServiceImpl.updateproduct(productModel);
-        Result.success();
-        return result;
+        return Result.result(200, "更新成功", null);
     }
-
-    @GetMapping("/admin/product/viewproducts/")
+    @GetMapping("/viewproducts/")
     public Result viewproducts(){
-        Result result = new Result();
         List<Product> productList = new ArrayList<Product>();
         ProductExample productExample = new ProductExample();
         productList = productServiceImpl.getproducts(productExample);
-        Result.success(productList);
-        http://101./admin/product/images/123.png
-        return result;
+        if(productList==null) {
+            return Result.result(500,"获取商品列表失败",null);
+        }
+        else return Result.success(productList);
     }
-    @GetMapping("/admin/product/viewproduct/{id}")
+    @GetMapping("/viewproduct/{id}")
     public Result viewproduct(@PathVariable int id){
-        Result result = new Result();
         Product product = new Product();
         product = productServiceImpl.getproduct(id);
-        Result.success(product);
-        return result;
+        if(product==null) {
+            return Result.result(500,"获取商品失败",null);
+        }
+        else return Result.success(product);
     }
-    @GetMapping("/admin/product/images/{name}")
+    @GetMapping("/images/{name}")
     public Result getimage(@PathVariable String name){
-        Result result = new Result();
-        MultipartFile multipartFile;
-        multipartFile = toMultipartFileUtils.tomutipartfile(name);
-        Result.success(multipartFile);
-        return result;
+        return Result.success();
     }
-    @DeleteMapping("/admin/product/deleteproduct/{id}")
+    @DeleteMapping("/deleteproduct/{id}")
     public Result deleteproduct(@PathVariable int id){
         productServiceImpl.deleteproduct(id);
-        Result result = new Result();
-        Result.success();
-        return result;
+        return Result.result(200, "删除成功", null);
     }
-
-
 
 }
