@@ -1,8 +1,6 @@
 package com.ouc.mallsecurity.config;
 
-import com.ouc.mallsecurity.interceptor.CrossDomainFilter;
-import com.ouc.mallsecurity.interceptor.EnDeFilter;
-import com.ouc.mallsecurity.interceptor.JwtFilter;
+import com.ouc.mallsecurity.interceptor.*;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +27,7 @@ public class FilterConfig {
     @Bean
     public FilterRegistrationBean<CrossDomainFilter> configCrossDomainFilter(){
         FilterRegistrationBean<CrossDomainFilter> bean = new FilterRegistrationBean<>();
+        bean.setName("crossDomainFilter");
         bean.setOrder(1);
         bean.setFilter(new CrossDomainFilter());
         // 匹配"/hello/"下面的所有url
@@ -42,23 +41,40 @@ public class FilterConfig {
     @Bean
     public FilterRegistrationBean<JwtFilter> configJwtFilter(){
         FilterRegistrationBean<JwtFilter> bean = new FilterRegistrationBean<>();
+        bean.setName("jwtFilter");
         bean.setOrder(2);
         bean.setFilter(new JwtFilter());
-        // 匹配"/hello/"下面的所有url
-        bean.addUrlPatterns("/testNothing");
+        bean.addUrlPatterns("/testRequest");
+        return bean;
+    }
+
+    /**
+     * 对所有的管理员接口进行身份鉴权
+     * */
+    @Bean
+    public FilterRegistrationBean<AdminFilter> configAdminFilter(){
+        FilterRegistrationBean<AdminFilter> bean = new FilterRegistrationBean<>();
+        bean.setName("AdminFilter");
+        bean.setOrder(3);
+        bean.setFilter(new AdminFilter());
+        bean.addUrlPatterns("/api/admin/**");
         return bean;
     }
 
     /**
      * json 数据加密和解密的 filter
      * */
+    /*
+    更新为使用 RequestBodyAdvice 来解密, 此配置已弃用
+
     @Bean
-    public FilterRegistrationBean<EnDeFilter> configEnDeFilter(){
-        FilterRegistrationBean<EnDeFilter> bean = new FilterRegistrationBean<>();
+    public FilterRegistrationBean<DeFilter> configDeFilter(){
+        FilterRegistrationBean<DeFilter> bean = new FilterRegistrationBean<>();
+        bean.setName("DeFilter");
         bean.setOrder(3);
-        bean.setFilter(new EnDeFilter());
-        // 匹配"/hello/"下面的所有url
+        bean.setFilter(new DeFilter());
         bean.addUrlPatterns("/testRequest");
         return bean;
     }
+    */
 }
