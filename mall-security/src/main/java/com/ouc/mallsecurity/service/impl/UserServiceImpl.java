@@ -6,10 +6,10 @@ import com.ouc.mallmbg.mapper.UserMapper;
 import com.ouc.mallmbg.model.User;
 import com.ouc.mallmbg.model.UserExample;
 import com.ouc.mallsecurity.service.UserService;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @Service
@@ -25,14 +25,15 @@ public class UserServiceImpl implements UserService {
     public User findByUserEmail(String email){
         UserExample userExample = new UserExample();
         userExample.createCriteria().andUserEmailEqualTo(email);
-        User user = (User) userMapper.selectByExample(userExample);
-        if(ObjUtil.isEmpty(user)) throw new ServiceException(406, "该用户不存在");
-        return user;
+        List<User> result = userMapper.selectByExample(userExample);
+        if( result.size() == 1) return result.get(0);
+        else if(result.size() == 0) throw new ServiceException(406, "该用户不存在");
+        else throw new ServiceException(500, "数据库用户信息错误");
     }
 
     @Override
     public void addUser(User user){
-        userMapper.insert(user);
+        if( userMapper.insert(user) == 0 ) throw new ServiceException(401, "注册失败");
     }
 
     @Override
@@ -40,7 +41,19 @@ public class UserServiceImpl implements UserService {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andUserEmailEqualTo(userEmail);
         userExample.createCriteria().andUserPwdEqualTo(userPwd);
-        User result = (User) userMapper.selectByExample(userExample);
-        return result != null;
+        int count = userMapper.selectByExample(userExample).size();
+        if( count == 0 )  return false;
+        else if(count == 1) return true;
+        else throw new ServiceException(500, "数据库用户信息错误");
+    }
+
+    @Override
+    public boolean isUserExist(String email) {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andUserEmailEqualTo(email);
+        int count = userMapper.selectByExample(userExample).size();
+        if( count == 0 )  return false;
+        else if(count == 1) return true;
+        else throw new ServiceException(500, "数据库用户信息错误");
     }
 }

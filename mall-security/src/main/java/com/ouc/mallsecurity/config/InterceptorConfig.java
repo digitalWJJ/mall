@@ -9,19 +9,19 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 @Configuration
-@MapperScan("com.ouc.mallmbg.mapper")
 public class InterceptorConfig extends WebMvcConfigurationSupport {
 
     @Override
     protected void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(jwtInterceptor())
+        String[] excludePathPatterns = {"/getEmailCode", "/signInByPwd", "/signInByCode", "/signup"}; // 不进行拦截的路由
+       /* registry.addInterceptor(jwtInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login")
-                .excludePathPatterns("/signup");
+                .excludePathPatterns(excludePathPatterns);
+//                .excludePathPatterns("/signup");
 //                .excludePathPatterns("/**");
-        super.addInterceptors(registry);
+        super.addInterceptors(registry);*/
     }
-
+/*
     @Bean
-    public JwtInterceptor jwtInterceptor(){ return new JwtInterceptor();}
+    public JwtInterceptor jwtInterceptor(){ return new JwtInterceptor();}*/
 }

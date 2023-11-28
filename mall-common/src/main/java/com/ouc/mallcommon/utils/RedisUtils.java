@@ -1,11 +1,14 @@
 package com.ouc.mallcommon.utils;
 
+import com.ouc.mallcommon.exception.ServiceException;
+import com.ouc.mallmbg.model.User;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 public class RedisUtils {
     private static RedisTemplate<Object, Object> redisTemplate;
 
+    private static final String activateUserMap = "activeUserMap";
     @Autowired
     RedisTemplate<Object, Object> redisTemplateInit;
 
@@ -102,4 +106,15 @@ public class RedisUtils {
         return true;
     }
 
+    /**
+     * 获取当前登陆用户的 HashMap
+     * */
+    public static HashMap<Integer, User> getActiveUserMap(){
+        HashMap<Integer, User> activeUserMap = new HashMap<>();
+        try {
+            return (HashMap<Integer, User>) redisTemplate.opsForValue().get(activateUserMap);
+        } catch (Exception e) {
+            throw new ServiceException(500, e.getMessage());
+        }
+    }
 }
