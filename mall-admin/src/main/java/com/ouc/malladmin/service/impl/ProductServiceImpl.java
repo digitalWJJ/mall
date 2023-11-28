@@ -4,7 +4,6 @@ import com.ouc.malladmin.model.ProductModel;
 import com.ouc.malladmin.service.ProductService;
 import com.ouc.malladmin.utils.SaveFileUtils;
 import com.ouc.mallmbg.mapper.ProductMapper;
-import com.ouc.mallmbg.model.Order;
 import com.ouc.mallmbg.model.Product;
 import com.ouc.mallmbg.model.ProductExample;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.io.IOException;
-import org.springframework.util.FileCopyUtils;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -44,22 +41,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void updateproduct(ProductModel productModel){
         Product product = new Product();
-        for(MultipartFile productImage: productModel.getProductImage()){
-            if(productImage != null){
-                UUID uuid = UUID.randomUUID();
-                String uuiD = uuid.toString();
-                String filename = productImage.getOriginalFilename();
-                String suffix = uuiD + filename.substring(filename.lastIndexOf("."));
-                File newfile = new File("localhost://admin/resources/images/" + suffix);
-                try{
-                    productImage.transferTo(newfile);
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
-                product.setProductImage1(suffix);
-            }
-
-        }
         product.setProductName(productModel.getProductName());
         product.setProductDescription(productModel.getProductDescription());
         product.setProductPrice(productModel.getProductPrice());

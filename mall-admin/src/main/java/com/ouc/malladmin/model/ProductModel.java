@@ -16,7 +16,7 @@ public class ProductModel {
 
     private String color;
 
-    private MultipartFile[] productImage;
+    private String[] productImage;
 
     private String category;
 
@@ -40,7 +40,7 @@ public class ProductModel {
         return color;
     }
 
-    public MultipartFile[] getProductImage() {
+    public String[] getProductImage() {
         return productImage;
     }
 
