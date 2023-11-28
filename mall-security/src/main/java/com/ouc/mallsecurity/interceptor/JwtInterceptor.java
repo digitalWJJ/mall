@@ -19,7 +19,9 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 
-
+/**
+ * 被弃用的 token 拦截器
+ * */
 public class JwtInterceptor implements HandlerInterceptor {
 
     @Resource
