@@ -1,31 +1,16 @@
 package com.ouc.mallsecurity.model;
 
+import lombok.Data;
+
+@Data
 public class PwdModel {
+    /**
+     * 邮箱
+     * */
     String email;
+
+    /**
+     * 密码
+     * */
     String pwd;
-    String confirmPwd;
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPwd() {
-        return pwd;
-    }
-
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
-    }
-
-    public String getConfirmPwd() {
-        return confirmPwd;
-    }
-
-    public void setConfirmPwd(String confirmPwd) {
-        this.confirmPwd = confirmPwd;
-    }
 }
