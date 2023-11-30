@@ -1,7 +1,8 @@
 package com.ouc.malladmin.controller;
 
 import com.ouc.malladmin.model.ProductModel;
-import com.ouc.malladmin.service.impl.ProductServiceImpl;
+import com.ouc.malladmin.service.ProductService;
+import com.ouc.malladmin.utils.SaveFileUtil;
 import com.ouc.mallcommon.Result;
 import com.ouc.mallmbg.mapper.ProductMapper;
 import com.ouc.mallmbg.model.Product;
@@ -17,23 +18,25 @@ public class ProductController {
     @Autowired
     ProductMapper productMapper;
     @Autowired
-    ProductServiceImpl productServiceImpl;
+    ProductService productService;
+    @Autowired
+    SaveFileUtil saveFileUtil;
 
     @PostMapping("/addproduct")
     public Result addProduct(@RequestBody ProductModel productModel) {
-        productServiceImpl.addproduct(productModel);
-        return Result.success();
+        productService.addproduct(productModel);
+        return Result.result(200, "添加成功", null);
     }
-    @PutMapping("/updateproduct/id")
+    @PostMapping("/update")
     public Result updateproduct(@RequestBody ProductModel productModel){
-        productServiceImpl.updateproduct(productModel);
+        productService.updateproduct(productModel);
         return Result.result(200, "更新成功", null);
     }
-    @GetMapping("/viewproducts/")
+    @GetMapping("/viewproducts")
     public Result viewproducts(){
-        List<Product> productList = new ArrayList<Product>();
+        List<Product> productList = new ArrayList<>();
         ProductExample productExample = new ProductExample();
-        productList = productServiceImpl.getproducts(productExample);
+        productList = productService.getproducts(productExample);
         if(productList==null) {
             return Result.result(500,"获取商品列表失败",null);
         }
@@ -42,19 +45,21 @@ public class ProductController {
     @GetMapping("/viewproduct/{id}")
     public Result viewproduct(@PathVariable int id){
         Product product = new Product();
-        product = productServiceImpl.getproduct(id);
+        product = productService.getproduct(id);
         if(product==null) {
             return Result.result(500,"获取商品失败",null);
         }
         else return Result.success(product);
     }
-    @GetMapping("/images/{name}")
-    public Result getimage(@PathVariable String name){
+    @GetMapping("/images/{base}")
+    public Result getimage(@PathVariable String base){
+        String name;
+        name = saveFileUtil.savefile(base);
         return Result.success();
     }
     @DeleteMapping("/deleteproduct/{id}")
     public Result deleteproduct(@PathVariable int id){
-        productServiceImpl.deleteproduct(id);
+        productService.deleteproduct(id);
         return Result.result(200, "删除成功", null);
     }
 

@@ -17,7 +17,7 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class RequestBodyDecrypt implements RequestBodyAdvice {
     @Override
     public boolean supports(MethodParameter methodParameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {

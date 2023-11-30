@@ -22,7 +22,7 @@ import java.nio.charset.StandardCharsets;
  * string   ->   string   ->   byte   ->   byte   ->   byte   ->   string
  * 明文string   aes加密之后的   转为byte    rsa加密的     base64转码的   传输的
  * */
-@ControllerAdvice
+//@ControllerAdvice
 public class ResponseBodyEncrypt implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class converterType) {
