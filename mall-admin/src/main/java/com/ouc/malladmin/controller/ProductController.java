@@ -37,13 +37,13 @@ public class ProductController {
     }
     @GetMapping("/viewproducts")
     public Result viewproducts(){
-        List<Product> productList = new ArrayList<>();
+        List<SplitProduct> splitProducts = new ArrayList<>();
         ProductExample productExample = new ProductExample();
-        productList = productService.getproducts(productExample);
-        if(productList==null) {
+        splitProducts = productService.getproducts(productExample);
+        if(splitProducts==null) {
             return Result.result(500,"获取商品列表失败",null);
         }
-        else return Result.success(productList);
+        else return Result.success(splitProducts);
     }
     @GetMapping("/viewproduct/{id}")
     public Result viewproduct(@PathVariable int id){
