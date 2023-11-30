@@ -34,9 +34,8 @@ public class SignController {
 
     @RequestMapping("/test")
     public Result test(){
-        //字符串
-        String str = "huanzi.qch@qq.com:欢子-java";
-        try {
+
+//        try {
             /*System.out.println("私钥：" + RsaUtil.getPrivateKey());
             System.out.println("公钥：" + RsaUtil.getPublicKey());
 
@@ -61,17 +60,17 @@ public class SignController {
 
             System.out.println("解密之后的内容：" + jsonObject);*/
 
-            Scanner scanner = new Scanner(System.in);
-            String encryptedAesKey = scanner.nextLine();
-            String load = scanner.nextLine();
-
-            String aesKey = new String( RsaUtil.decryptByPrivateKey( Base64.decodeBase64(encryptedAesKey.getBytes()), RsaUtil.getPrivateKey()) );
-            String data = AesUtil.decrypt(load, aesKey);
-            System.out.println(aesKey);
-            System.out.println(data); // TODO
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//            Scanner scanner = new Scanner(System.in);
+//            String encryptedAesKey = scanner.nextLine();
+//            String load = scanner.nextLine();
+//
+//            String aesKey = new String( RsaUtil.decryptByPrivateKey( Base64.decodeBase64(encryptedAesKey.getBytes()), RsaUtil.getPrivateKey()) );
+//            String data = AesUtil.decrypt(load, aesKey);
+//            System.out.println(aesKey);
+//            System.out.println(data);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         return Result.success("this is test");
     }
 
@@ -116,7 +115,7 @@ public class SignController {
      *
      * @param email 接收验证码的邮箱
     * */
-    @PostMapping("/getEmailCode")
+    @GetMapping("/getEmailCode")
     public Result getEmailCode(@RequestParam("email") String email){
         if( !EmailValidatorUtil.validateEmail(email) ) throw new ServiceException(402, "邮箱格式不正确");
         signService.sendEmailCode(email);
