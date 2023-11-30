@@ -25,7 +25,7 @@ public class Result {
     }
 
     public static Result authError(int code, String msg){
-        return new Result(CODE_AUTH_ERROR,"请重新登录",null);
+        return new Result(CODE_AUTH_ERROR,msg,null);
     }
 
     public static Result result(int code, String msg, Object data){
