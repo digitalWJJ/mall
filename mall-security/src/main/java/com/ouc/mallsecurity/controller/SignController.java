@@ -116,7 +116,7 @@ public class SignController {
      *
      * @param email 接收验证码的邮箱
     * */
-    @PostMapping("/getEmailCode")
+    @GetMapping("/getEmailCode")
     public Result getEmailCode(@RequestParam("email") String email){
         if( !EmailValidatorUtil.validateEmail(email) ) throw new ServiceException(402, "邮箱格式不正确");
         signService.sendEmailCode(email);

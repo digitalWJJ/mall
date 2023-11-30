@@ -31,7 +31,7 @@ public class FilterConfig {
         bean.setOrder(1);
         bean.setFilter(new CrossDomainFilter());
         // 匹配"/hello/"下面的所有url
-        bean.addUrlPatterns("/**");
+        bean.addUrlPatterns("/*");
         return bean;
     }
 
