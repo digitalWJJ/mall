@@ -36,7 +36,7 @@ public class IndentController {
         }
         else return Result.success(Indent);
     }
-    @PutMapping("/updateorder/{id}")
+    @PostMapping("/updateorder")
     public Result updateIndent(@RequestBody Indent Indent){
         IndentService.updateindent(Indent);
         return Result.result(200, "更新订单成功", null);
@@ -44,7 +44,7 @@ public class IndentController {
     @DeleteMapping("/deleteorder/{id}")
     public Result deleteIndent(@PathVariable int id){
         IndentService.deleteindent(id);
-        return Result.result(200, "删除删除成功", null);
+        return Result.result(200, "删除订单成功", null);
     }
 
 
