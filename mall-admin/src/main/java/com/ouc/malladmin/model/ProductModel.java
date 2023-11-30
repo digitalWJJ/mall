@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.math.BigDecimal;
 
 public class ProductModel {
+    private int id;
 
     private String productName;
 
@@ -19,6 +20,9 @@ public class ProductModel {
     private String[] productImage;
 
     private String category;
+    public int getId(){
+        return id;
+    }
 
     public String getProductName() {
         return productName;

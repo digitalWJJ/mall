@@ -1,6 +1,6 @@
 package com.ouc.malladmin.controller;
 
-import com.ouc.malladmin.service.impl.UserServiceImpl;
+import com.ouc.malladmin.service.UserService;
 import com.ouc.mallcommon.Result;
 import com.ouc.mallmbg.mapper.UserMapper;
 import com.ouc.mallmbg.model.*;
@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 @RestController
-@RequestMapping(value = "/api/admin/order")
+@RequestMapping(value = "/api/admin/user")
 public class UserController {
     @Autowired
     UserMapper userMapper;
     @Autowired
-    UserServiceImpl userServiceImpl;
+    UserService userService;
     @GetMapping("/viewusers")
     public Result viewusers(){
-        List<User> usersList = new ArrayList<User>();
+        List<User> usersList = new ArrayList<>();
         UserExample userExample = new UserExample();
-        usersList = userServiceImpl.getusers(userExample);
+        usersList = userService.getusers(userExample);
         if(usersList==null) {
             return Result.result(500,"获取用户列表失败",null);
         }
@@ -30,15 +30,15 @@ public class UserController {
     @GetMapping("/viewuser/{id}")
     public Result viewuser(@PathVariable int id){
         User user = new User();
-        user = userServiceImpl.getuser(id);
+        user = userService.getuser(id);
         if(user==null) {
             return Result.result(500,"获取用户信息失败",null);
         }
         else return Result.success(user);
     }
-    @DeleteMapping("/admin/product/deleteuser/{id}")
+    @DeleteMapping("/deleteuser/{id}")
     public Result deleteuser(@PathVariable int id){
-        userServiceImpl.deleteuser(id);
+        userService.deleteuser(id);
         Result result = new Result();
         return Result.result(200, "删除成功", null);
     }
