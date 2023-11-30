@@ -1,31 +1,26 @@
 package com.ouc.mallsecurity.interceptor;
 
-import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.ouc.mallcommon.AuthAccess;
 import com.ouc.mallcommon.exception.ServiceException;
-import com.ouc.mallmbg.mapper.UserMapper;
-import com.ouc.mallmbg.model.User;
-import jakarta.annotation.Resource;
+import com.ouc.mallcommon.utils.RedisUtils;
+import com.ouc.mallcommon.utils.TokenUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 
 /**
- * 被弃用的 token 拦截器
+ * JWT token 拦截器
  * */
 public class JwtInterceptor implements HandlerInterceptor {
-
-    @Resource
-    UserMapper userMapper;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -41,21 +36,25 @@ public class JwtInterceptor implements HandlerInterceptor {
         // 解码token获取其中的userId
         int userId;
         try {
-            userId = Integer.getInteger( JWT.decode(accessToken).getAudience().get(0) ); // 这里具体获取什么内容取决于你是如何向其中填入内容的
+            userId = Integer.parseInt( JWT.decode(accessToken).getAudience().get(0) ); // 这里具体获取什么内容取决于你是如何向其中填入内容的
         } catch (JWTDecodeException e){
             throw new ServiceException(401, "请登录");
         }
 
-        // 根据userId取得对应用户的具体信息
-        User user = userMapper.selectByPrimaryKey( userId );
-        if(ObjUtil.isEmpty(user)) throw new ServiceException(406, "该用户不存在");
-
+        String sign = RedisUtils.getActivatedUser(userId).getUserPwd();
         // 根据此用户的密码生成一个token验证器,也可以根据别的信息,取决于生成token时的设计
-        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getUserPwd())).build();
+        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(sign)).build();
         try{
-            jwtVerifier.verify(accessToken);
+            // 如果通过验证 包括但不限于有效时间之内和 sign 部分就可以正常获取到一个 DecodeJWT
+            DecodedJWT decodedJWT = jwtVerifier.verify(accessToken);
+            long userTimeStamp = decodedJWT.getExpiresAt().getTime(); // 获取该 token 的过期时间
+            long currentTimeStamp = System.currentTimeMillis();
+            long delta = (userTimeStamp-currentTimeStamp)/1000; // 以秒为单位的时间差
+            if(  delta > 7200 ) throw new JWTVerificationException("无效token");
+            // TODO 可以考虑将 新的 token 接着用 json 数据返回 只要在 response 的 header 中设置一个标志位 然后 在加密的部分先判断一下, 如果为 true 就 新增加一个 token 字段到返回的 json 数据中
+            if( delta < 1800 )  response.setHeader("Authorization", TokenUtils.genToken(String.valueOf(userId), sign) ); // 如果距离过期时间不足 30 分钟就重新生成一个token
         } catch (JWTVerificationException e){
-            throw new ServiceException(401,"请登录");
+            throw new ServiceException(401,e.getMessage());
         }
 
         return true; // 前面的步骤都没问题就返回真
