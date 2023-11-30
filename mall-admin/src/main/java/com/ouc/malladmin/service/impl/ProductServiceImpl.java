@@ -3,6 +3,8 @@ package com.ouc.malladmin.service.impl;
 import com.ouc.malladmin.model.ProductModel;
 import com.ouc.malladmin.service.ProductService;
 import com.ouc.malladmin.utils.SaveFileUtil;
+import com.ouc.mallcommon.dto.SplitProduct;
+import com.ouc.mallcommon.utils.TypeCasting;
 import com.ouc.mallmbg.mapper.ProductMapper;
 import com.ouc.mallmbg.model.Product;
 import com.ouc.mallmbg.model.ProductExample;
@@ -55,16 +57,30 @@ public class ProductServiceImpl implements ProductService {
         productMapper.updateByPrimaryKeySelective(product);
     }
     @Override
-    public List<Product> getproducts(ProductExample productExample){
-        List<Product> products = new ArrayList<Product>();
+    public List<SplitProduct> getproducts(ProductExample productExample){
+        List<Product> products = new ArrayList<>();
         products = productMapper.selectByExample(productExample);
-        return products;
+        List<SplitProduct> splitProducts = new ArrayList<>();
+        try {
+            for(int i = 0; i < products.size(); i++){
+                splitProducts.add(TypeCasting.productToSplitProduct(products.get(i)));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return splitProducts;
     }
     @Override
-    public Product getproduct(Integer id){
+    public SplitProduct getproduct(Integer id){
         Product product = new Product();
         product = productMapper.selectByPrimaryKey(id);
-        return product;
+        SplitProduct splitProduct = null;
+        try {
+            splitProduct = TypeCasting.productToSplitProduct(product);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return splitProduct;
     }
     @Override
     public void deleteproduct(Integer id){
