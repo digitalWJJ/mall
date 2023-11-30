@@ -70,9 +70,9 @@ public class IndentController {
         else return  Result.result(500,"添加购物车失败",null);
     }
 
-    @RequestMapping(value = "/confirm/deleteList",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteList",method = RequestMethod.DELETE)
     @ResponseBody
-    public Result deleteMultipleOrdersInMyCart(List<Integer> ids)
+    public Result deleteMultipleOrdersInMyCart(@RequestParam("ids") List<Integer> ids)
     {
         if(indentService.deleteList(ids)>0)
         {
