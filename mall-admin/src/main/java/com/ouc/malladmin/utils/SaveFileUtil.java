@@ -17,7 +17,12 @@ public class SaveFileUtil {
         if(productImage != null) {
             UUID uuid = UUID.randomUUID();
             String uuiD = uuid.toString();
-//            byte[] bytes = Base64.getDecoder().decode(productImage);
+            byte[] bytes = Base64.getDecoder().decode(productImage);
+            try {
+                OSS.uploadImg(uuiD + getType.gettype(productImage),bytes,0);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             return uuiD + getType.gettype(productImage);
         }
         return "错误";

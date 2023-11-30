@@ -4,6 +4,7 @@ import com.ouc.malladmin.model.ProductModel;
 import com.ouc.malladmin.service.ProductService;
 import com.ouc.malladmin.utils.SaveFileUtil;
 import com.ouc.mallcommon.Result;
+import com.ouc.mallcommon.utils.OSS;
 import com.ouc.mallmbg.mapper.ProductMapper;
 import com.ouc.mallmbg.model.Product;
 import com.ouc.mallmbg.model.ProductExample;
@@ -51,11 +52,15 @@ public class ProductController {
         }
         else return Result.success(product);
     }
-    @GetMapping("/images/{base}")
+    @GetMapping("/getimage/{base}")
     public Result getimage(@PathVariable String base){
-        String name;
-        name = saveFileUtil.savefile(base);
-        return Result.success();
+        String url = null;
+        try {
+            url = OSS.getProductImgUrl(saveFileUtil.savefile(base), 0);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.result(200,"获取图片成功", url);
     }
     @DeleteMapping("/deleteproduct/{id}")
     public Result deleteproduct(@PathVariable int id){

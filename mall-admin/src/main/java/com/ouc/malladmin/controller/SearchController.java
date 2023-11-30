@@ -17,7 +17,7 @@ import java.util.List;
 public class SearchController {
     @Autowired
     SearchService searchService;
-    @GetMapping("/searchbywords/{key}")
+    @GetMapping("/searchbykey/{key}")
     public Result searchbywords(@PathVariable String key){
         List<Product> productList = new ArrayList<>();
         productList = searchService.searchbywords(key);

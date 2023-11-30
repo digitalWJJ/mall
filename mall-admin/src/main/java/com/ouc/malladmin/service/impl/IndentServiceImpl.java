@@ -32,16 +32,6 @@ public class IndentServiceImpl implements IndentService {
     }
     @Override
     public void updateindent(Indent indent){
-        indent.setReceiverName(indent.getReceiverName());
-        indent.setCommitTime(indent.getCommitTime());
-        indent.setUserId(indent.getUserId());
-        indent.setProductId(indent.getProductId());
-        indent.setTotalPrice(indent.getTotalPrice());
-        indent.setAmount(indent.getAmount());
-        indent.setStatus(indent.getStatus());
-        indent.setAddress(indent.getAddress());
-        indent.setPhoneNumber(indent.getPhoneNumber());
-        indent.setConfiguration(indent.getConfiguration());
         indentMapper.updateByPrimaryKeySelective(indent);
     }
 }
