@@ -42,7 +42,7 @@ public class TokenUtils {
             HttpServletRequest request = ( (ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             String token = request.getHeader("Authorization");
             if(StrUtil.isNotBlank(token)){
-                token = token.replace("Bearer","");
+                token = token.replace("Bearer+","");
                 String userId = JWT.decode(token).getAudience().get(0);
                 return staticUserMapper.selectByPrimaryKey(Integer.getInteger(userId));
             }
