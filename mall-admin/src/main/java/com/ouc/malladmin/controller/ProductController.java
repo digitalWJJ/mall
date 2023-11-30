@@ -4,7 +4,9 @@ import com.ouc.malladmin.model.ProductModel;
 import com.ouc.malladmin.service.ProductService;
 import com.ouc.malladmin.utils.SaveFileUtil;
 import com.ouc.mallcommon.Result;
+import com.ouc.mallcommon.dto.SplitProduct;
 import com.ouc.mallcommon.utils.OSS;
+import com.ouc.mallcommon.utils.TypeCasting;
 import com.ouc.mallmbg.mapper.ProductMapper;
 import com.ouc.mallmbg.model.Product;
 import com.ouc.mallmbg.model.ProductExample;
@@ -45,12 +47,12 @@ public class ProductController {
     }
     @GetMapping("/viewproduct/{id}")
     public Result viewproduct(@PathVariable int id){
-        Product product = new Product();
-        product = productService.getproduct(id);
-        if(product==null) {
+        SplitProduct splitProduct = new SplitProduct();
+        splitProduct = productService.getproduct(id);
+        if(splitProduct==null) {
             return Result.result(500,"获取商品失败",null);
         }
-        else return Result.success(product);
+        else return Result.success(splitProduct);
     }
     @GetMapping("/getimage/{base}")
     public Result getimage(@PathVariable String base){
@@ -60,7 +62,7 @@ public class ProductController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return Result.result(200,"获取图片成功", url);
+        return Result.result(200,"获取图片成功", saveFileUtil.savefile(base));
     }
     @DeleteMapping("/deleteproduct/{id}")
     public Result deleteproduct(@PathVariable int id){
