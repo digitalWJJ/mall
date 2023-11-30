@@ -12,5 +12,7 @@ public interface IndentService {
     List<Indent> getList(int userId);
     int create(int id, String color, String configuration, int amount);
 
+    List<Indent> getAllList(int id);
+
     int deleteList(List<Integer> ids);
 }

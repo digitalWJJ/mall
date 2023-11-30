@@ -1,6 +1,7 @@
 package com.ouc.mallproduct.controller;
 
 import com.aliyuncs.exceptions.ClientException;
+import com.ouc.mallcommon.dto.SplitProduct;
 import com.ouc.mallmbg.model.Product;
 import com.ouc.mallcommon.utils.TypeCasting;
 import jakarta.annotation.Resource;
@@ -21,6 +22,6 @@ public class ProductController {
         {
            return Result.result(500,"获取具体商品信息失败",null);
         }
-        else  return Result.success(TypeCasting.productToSplitProduct(product));
+        return Result.success(TypeCasting.productToSplitProduct(product));
     }
 }

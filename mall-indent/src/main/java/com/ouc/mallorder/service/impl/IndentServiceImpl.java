@@ -44,6 +44,14 @@ public class IndentServiceImpl implements IndentService {
         criteria.andStatusEqualTo("待下单");
         return indentList;
     }
+
+    @Override
+    public List<Indent> getAllList(int id) {
+        IndentExample indentExample=new IndentExample();
+        indentExample.createCriteria().andIdEqualTo(id);
+        return indentMapper.selectByExample(indentExample);
+    }
+
     @Override
     public int create(int productId, String color, String configuration, int amount) {
         Indent indent=new Indent();
