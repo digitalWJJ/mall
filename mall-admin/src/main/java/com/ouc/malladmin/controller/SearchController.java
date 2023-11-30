@@ -16,11 +16,11 @@ import java.util.List;
 @RequestMapping(value = "/api/admin/search")
 public class SearchController {
     @Autowired
-    SearchServiceImpl searchServiceImpl;
+    SearchService searchService;
     @GetMapping("/searchbywords/{key}")
     public Result searchbywords(@PathVariable String key){
-        List<Product> productList = new ArrayList<Product>();
-        productList = searchServiceImpl.searchbywords(key);
+        List<Product> productList = new ArrayList<>();
+        productList = searchService.searchbywords(key);
         if(productList==null) {
             return Result.result(500,"获取商品列表失败",null);
         }
@@ -30,7 +30,7 @@ public class SearchController {
     public Result searchbysearchbycategory(@PathVariable int id){
         Result result = new Result();
         List<Product> productList = new ArrayList<Product>();
-        productList = searchServiceImpl.searchbycategory(id);
+        productList = searchService.searchbycategory(id);
         if(productList==null) {
             return Result.result(500,"获取商品列表失败",null);
         }
@@ -39,7 +39,7 @@ public class SearchController {
     @GetMapping("/search/searchcombine/{key, id}")
     public Result searchbysearchbycategory(@PathVariable String key, @PathVariable int id){
         List<Product> productList = new ArrayList<Product>();
-        productList = searchServiceImpl.searchcombine(key, id);
+        productList = searchService.searchcombine(key, id);
         if(productList==null) {
             return Result.result(500,"获取商品列表失败",null);
         }
