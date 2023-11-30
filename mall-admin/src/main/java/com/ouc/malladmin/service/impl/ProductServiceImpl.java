@@ -26,29 +26,33 @@ public class ProductServiceImpl implements ProductService {
         product.setProductPrice(productModel.getProductPrice());
         product.setConfiguration(productModel.getConfiguration());
         product.setColor(productModel.getColor());
-        product.setProductImage1(saveFileUtils.savefile(productModel.getProductImage()[0]));
-        product.setProductImage2(saveFileUtils.savefile(productModel.getProductImage()[1]));
-        product.setProductImage3(saveFileUtils.savefile(productModel.getProductImage()[2]));
-        product.setProductImage4(saveFileUtils.savefile(productModel.getProductImage()[3]));
-        product.setProductImage5(saveFileUtils.savefile(productModel.getProductImage()[4]));
+        if(productModel.getProductImage() != null){
+            if(0 < productModel.getProductImage().length) product.setProductImage1(saveFileUtils.savefile(productModel.getProductImage()[0]));
+            if(1 < productModel.getProductImage().length) product.setProductImage2(saveFileUtils.savefile(productModel.getProductImage()[1]));
+            if(2 < productModel.getProductImage().length) product.setProductImage3(saveFileUtils.savefile(productModel.getProductImage()[2]));
+            if(3 < productModel.getProductImage().length) product.setProductImage4(saveFileUtils.savefile(productModel.getProductImage()[3]));
+            if(4 < productModel.getProductImage().length) product.setProductImage5(saveFileUtils.savefile(productModel.getProductImage()[4]));
+        }
         product.setCategory(productModel.getCategory());
         productMapper.insert(product);
     }
     @Override
     public void updateproduct(ProductModel productModel){
         Product product = new Product();
+        product.setId(productModel.getId());
         product.setProductName(productModel.getProductName());
         product.setProductDescription(productModel.getProductDescription());
         product.setProductPrice(productModel.getProductPrice());
         product.setConfiguration(productModel.getConfiguration());
         product.setColor(productModel.getColor());
-        product.setProductImage1(saveFileUtils.savefile(productModel.getProductImage()[0]));
-        product.setProductImage2(saveFileUtils.savefile(productModel.getProductImage()[1]));
-        product.setProductImage3(saveFileUtils.savefile(productModel.getProductImage()[2]));
-        product.setProductImage4(saveFileUtils.savefile(productModel.getProductImage()[3]));
-        product.setProductImage5(saveFileUtils.savefile(productModel.getProductImage()[4]));
-        product.setCategory(productModel.getCategory());
-        productMapper.updateByPrimaryKey(product);
+        if(productModel.getProductImage() != null){
+            if(0 < productModel.getProductImage().length) product.setProductImage1(saveFileUtils.savefile(productModel.getProductImage()[0]));
+            if(1 < productModel.getProductImage().length) product.setProductImage2(saveFileUtils.savefile(productModel.getProductImage()[1]));
+            if(2 < productModel.getProductImage().length) product.setProductImage3(saveFileUtils.savefile(productModel.getProductImage()[2]));
+            if(3 < productModel.getProductImage().length) product.setProductImage4(saveFileUtils.savefile(productModel.getProductImage()[3]));
+            if(4 < productModel.getProductImage().length) product.setProductImage5(saveFileUtils.savefile(productModel.getProductImage()[4]));
+        }
+        productMapper.updateByPrimaryKeySelective(product);
     }
     @Override
     public List<Product> getproducts(ProductExample productExample){
