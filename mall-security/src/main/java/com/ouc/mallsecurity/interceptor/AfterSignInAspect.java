@@ -1,6 +1,7 @@
 package com.ouc.mallsecurity.interceptor;
 
 import cn.hutool.json.JSONUtil;
+import com.ouc.mallcommon.exception.ServiceException;
 import com.ouc.mallcommon.utils.RedisUtils;
 import com.ouc.mallcommon.utils.TokenUtils;
 import com.ouc.mallmbg.model.User;
@@ -21,11 +22,19 @@ public class AfterSignInAspect {
      * 用户登录之将用户信息添加到 activeUsers 中,然后生成 token
      * */
     @Around(value = "@annotation(com.ouc.mallsecurity.annotation.GenToken)")
-    public String afterSignInAspect(ProceedingJoinPoint joinPoint ) throws Throwable {
-        String pointResult = (String) joinPoint.proceed();
-        User user = string2User(pointResult);
-        setUser2Redis(user);
-        return genToken(String.valueOf( user.getId() ), user.getUserPwd());
+    public String afterSignInAspect(ProceedingJoinPoint joinPoint ) {
+        String pointResult = null;
+        User user = null;
+        try {
+            pointResult = (String) joinPoint.proceed();
+            user = string2User(pointResult);
+            setUser2Redis(user);
+            return genToken(String.valueOf( user.getId() ), user.getUserPwd());
+        } catch (Throwable e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            throw new ServiceException(500, "服务器内部错误");
+        }
     }
 
     /**
@@ -42,7 +51,7 @@ public class AfterSignInAspect {
      * @param user 被添加到缓存的用户对象
      * */
     public void setUser2Redis(User user){
-        RedisUtils.getActiveUserMap().put(user.getId(), user);
+        RedisUtils.setUser2ActivatedUserMap(user);
     }
 
     /**
