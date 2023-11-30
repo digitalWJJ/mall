@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 public class RedisUtils {
     private static RedisTemplate<Object, Object> redisTemplate;
 
-    private static final String activateUserMap = "activeUserMap";
+    private static final String activatedUserMap = "activatedUserMap";
     @Autowired
     RedisTemplate<Object, Object> redisTemplateInit;
 
@@ -107,13 +107,24 @@ public class RedisUtils {
     }
 
     /**
-     * 获取当前登陆用户的 HashMap
+     * 获取指定的 id 用户
      * */
-    public static HashMap<Integer, User> getActiveUserMap(){
-        HashMap<Integer, User> activeUserMap = new HashMap<>();
+    public static User getActivatedUser(int id){
         try {
-            return (HashMap<Integer, User>) redisTemplate.opsForValue().get(activateUserMap);
+            return (User) redisTemplate.opsForHash().get(activatedUserMap, id);
         } catch (Exception e) {
+            throw new ServiceException(500, e.getMessage());
+        }
+    }
+
+    /**
+     * 设置一个用户到 activateUserMap 中
+     * */
+    public static void setUser2ActivatedUserMap(User user){
+        try {
+            redisTemplate.opsForHash().put(activatedUserMap, user.getId(), user);
+        } catch (Exception e) {
+            e.printStackTrace();
             throw new ServiceException(500, e.getMessage());
         }
     }

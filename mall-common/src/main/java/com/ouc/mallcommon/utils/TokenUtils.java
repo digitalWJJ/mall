@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.ouc.mallcommon.exception.ServiceException;
 import com.ouc.mallmbg.mapper.UserMapper;
 import com.ouc.mallmbg.model.User;
 import jakarta.annotation.PostConstruct;
@@ -44,12 +45,13 @@ public class TokenUtils {
             if(StrUtil.isNotBlank(token)){
                 token = token.replace("Bearer+","");
                 String userId = JWT.decode(token).getAudience().get(0);
-                return staticUserMapper.selectByPrimaryKey(Integer.getInteger(userId));
+                return RedisUtils.getActivatedUser(Integer.parseInt(userId));
             }
         } catch (Exception e){
-            return null;
+            e.printStackTrace();
+            throw new ServiceException(401, e.getMessage());
         }
-        return null;
+        throw new ServiceException(401, "无效token");
     }
 
 }
