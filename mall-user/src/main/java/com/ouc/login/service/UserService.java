@@ -9,7 +9,5 @@ public interface UserService {
     User getItem(int id);
     int updatePassword(int id,String password);
 
-
-
-    int updateUserInfo(int id,String  userName, String gender, String stateMessage);
+    int updateUserInfo(int id,String userName, String gender, String stateMessage);
 }

@@ -10,8 +10,8 @@
 
     <artifactId>mall-indent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>mall-order</name>
-    <description>mall-order</description>
+    <name>mall-indent</name>
+    <description>mall-indent</description>
 
     <dependencies>
         <dependency>

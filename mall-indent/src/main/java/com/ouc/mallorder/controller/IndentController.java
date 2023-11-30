@@ -81,7 +81,7 @@ public class IndentController {
         return Result.result(500,"删除多个订单条目失败",null);
     }
 
-    @RequestMapping (value = "/mycart/allIndent/get/{userId}",method = RequestMethod.GET)
+    @RequestMapping (value = "/allIndent/get/{userId}",method = RequestMethod.GET)
     @ResponseBody
     public Result getAllIndent(@PathVariable("userId")int userId)
     {
