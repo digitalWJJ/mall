@@ -1,6 +1,7 @@
 package com.ouc.mallsecurity.controller;
 
-import com.ouc.mallcommon.AuthAccess;
+import com.ouc.mallcommon.annotation.AdminAccess;
+import com.ouc.mallcommon.annotation.AuthAccess;
 import com.ouc.mallcommon.Result;
 import com.ouc.mallsecurity.service.StsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class StsController {
      * */
     @GetMapping("/getOssToken")
     @AuthAccess
+    @AdminAccess
     public Result getOssToken(){
         return Result.success( stsService.getOssToken() );
     }
