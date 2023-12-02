@@ -12,6 +12,6 @@ public class GlobalException {
     @ExceptionHandler(ServiceException.class)
     @ResponseBody
     public Result serviceException(ServiceException e){
-        return Result.authError(e.getCode(),e.getMessage());
+        return Result.result(e.getCode(),e.getMessage(), null);
     }
 }

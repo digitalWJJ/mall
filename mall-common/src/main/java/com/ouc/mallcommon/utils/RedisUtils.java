@@ -111,9 +111,12 @@ public class RedisUtils {
      * */
     public static User getActivatedUser(int id){
         try {
-            return (User) redisTemplate.opsForHash().get(activatedUserMap, id);
+            User user = (User) redisTemplate.opsForHash().get(activatedUserMap, id);
+            if(user == null) throw new ServiceException("请重新登录");
+            return user;
         } catch (Exception e) {
-            throw new ServiceException(500, e.getMessage());
+            if(e instanceof ServiceException) throw new ServiceException(401, e.getMessage());
+            else throw new ServiceException(500, e.getMessage());
         }
     }
 
