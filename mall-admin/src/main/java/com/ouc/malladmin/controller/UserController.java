@@ -21,7 +21,7 @@ public class UserController {
         List<User> usersList = new ArrayList<>();
         UserExample userExample = new UserExample();
         usersList = userService.getusers(userExample);
-        if(usersList==null) {
+        if(usersList.isEmpty()) {
             return Result.result(500,"获取用户列表失败",null);
         }
         else return Result.success(usersList);

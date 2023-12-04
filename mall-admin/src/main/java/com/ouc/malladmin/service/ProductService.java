@@ -9,8 +9,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductService {
-    void addproduct(ProductModel productModel);
-    void updateproduct(ProductModel productModel);
+    void addproduct(SplitProduct splitProduct);
+    void updateproduct(SplitProduct splitProduct);
     List<SplitProduct> getproducts(ProductExample productExample);
     void deleteproduct(Integer id);
     SplitProduct getproduct(Integer id);
