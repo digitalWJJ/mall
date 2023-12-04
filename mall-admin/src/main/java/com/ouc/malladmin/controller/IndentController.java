@@ -22,7 +22,7 @@ public class IndentController {
         List<Indent> IndentList = new ArrayList<>();
         IndentExample IndentExample = new IndentExample();
         IndentList = IndentService.getindents(IndentExample);
-        if(IndentList==null) {
+        if(IndentList.isEmpty()) {
             return Result.result(500,"获取订单列表失败",null);
         }
         else return Result.success(IndentList);
@@ -46,6 +46,4 @@ public class IndentController {
         IndentService.deleteindent(id);
         return Result.result(200, "删除订单成功", null);
     }
-
-
 }
