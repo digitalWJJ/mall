@@ -1,7 +1,8 @@
 package com.ouc.mallcommon.utils;
 
 import com.ouc.mallcommon.exception.ServiceException;
-import com.ouc.mallmbg.model.User;
+import com.ouc.mallmbg.mapper.ProductMapper;
+import com.ouc.mallmbg.model.*;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,12 @@ public class RedisUtils {
     private static RedisTemplate<Object, Object> redisTemplate;
 
     private static final String activatedUserMap = "activatedUserMap";
+    private static final String productsMap = "productsMap";
     @Autowired
     RedisTemplate<Object, Object> redisTemplateInit;
+
+    @Autowired
+    ProductMapper productMapper;
 
     @PostConstruct
     private void setRedisTemplate (){
@@ -108,6 +113,7 @@ public class RedisUtils {
 
     /**
      * 获取指定的 id 用户
+     * @param id 指定的用户的 id
      * */
     public static User getActivatedUser(int id){
         try {
@@ -122,6 +128,7 @@ public class RedisUtils {
 
     /**
      * 设置一个用户到 activateUserMap 中
+     * @param user 需要被添加的 user
      * */
     public static void setUser2ActivatedUserMap(User user){
         try {

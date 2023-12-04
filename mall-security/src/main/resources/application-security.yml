@@ -49,8 +49,8 @@ host:
 sts:
   regionId: cn-qingdao
   endpoint: sts.cn-qingdao.aliyuncs.com
-  accessKeyId: *
-  accessKeySecret: *
+  accessKeyId: LTAI5tMNJpfyPz1tHA4LrrS7
+  accessKeySecret: IcFckiX8brX7R4IfIQppzB4jIESU6X
   roleArn: acs:ram::1669501443769885:role/malladmin
   roleSessionName: mallAdmin
   durationSeconds: 3600
