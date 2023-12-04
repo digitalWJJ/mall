@@ -18,18 +18,18 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
-mybatis:
-  mapper-locations:
-    - classpath:mapper/*.xml
-    - classpath*:com/**/mapper/*.xml
+#mybatis:
+#  mapper-locations:
+#    - classpath:mapper/*.xml
+#    - classpath*:com/**/mapper/*.xml
 
-logging:
-  level:
-    root: info
-    com.macro.mall: debug
-
-  config:
-   - classpath:log4j2.xml
+#logging:
+#  level:
+#    root: info
+#    com.macro.mall: debug
+#
+#  config:
+#   - classpath:log4j2.xml
 
 host:
   mall:

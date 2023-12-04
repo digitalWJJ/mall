@@ -22,7 +22,7 @@ public class IndentController {
         List<Indent> indentList= indentService.getList(userId);
         if(indentList.size()==0)
             return Result.result(500,"获取不到数据",null);
-        Result result=new Result(200,"获取购车车成功",indentList);
+        Result result=new Result(200,"获取购物车成功",indentList);
         return result;
     }
     @RequestMapping(value = "/delete/{orderId}",method = RequestMethod.DELETE)
@@ -70,14 +70,25 @@ public class IndentController {
         else return  Result.result(500,"添加购物车失败",null);
     }
 
-    @RequestMapping(value = "/confirm/deleteList",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteList",method = RequestMethod.DELETE)
     @ResponseBody
-    public Result deleteMultipleOrdersInMyCart(List<Integer> ids)
+    public Result deleteMultipleOrdersInMyCart(@RequestParam("ids") List<Integer> ids)
     {
         if(indentService.deleteList(ids)>0)
         {
             return Result.result(200,"删除多个订单条目成功",null);
         }
         return Result.result(500,"删除多个订单条目失败",null);
+    }
+
+    @RequestMapping (value = "/allIndent/get/{userId}",method = RequestMethod.GET)
+    @ResponseBody
+    public Result getAllIndent(@PathVariable("userId")int userId)
+    {
+        List<Indent> indentList= indentService.getAllList(userId);
+        if(indentList.size()==0)
+            return Result.result(500,"获取不到数据",null);
+        Result result=new Result(200,"获取用户所有订单成功",indentList);
+        return result;
     }
 }

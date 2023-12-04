@@ -14,7 +14,20 @@
     <description>mall-user</description>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.ouc</groupId>
+            <artifactId>mall-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ouc</groupId>
+            <artifactId>mall-mbg</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

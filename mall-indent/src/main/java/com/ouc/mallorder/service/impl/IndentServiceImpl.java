@@ -1,12 +1,16 @@
 package com.ouc.mallorder.service.impl;
 
+import com.ouc.mallcommon.utils.TokenUtils;
 import com.ouc.mallmbg.mapper.IndentMapper;
+import com.ouc.mallmbg.mapper.ProductMapper;
 import com.ouc.mallmbg.model.Indent;
 import com.ouc.mallmbg.model.IndentExample;
+import com.ouc.mallmbg.model.Product;
 import com.ouc.mallorder.service.IndentService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +18,9 @@ import java.util.List;
 public class IndentServiceImpl implements IndentService {
     @Resource
     private IndentMapper indentMapper;
+
+    @Resource
+    private ProductMapper productMapper;
 
     @Override
     public int deleteItem(int id) {
@@ -44,13 +51,24 @@ public class IndentServiceImpl implements IndentService {
         criteria.andStatusEqualTo("待下单");
         return indentList;
     }
+
+    @Override
+    public List<Indent> getAllList(int id) {
+        IndentExample indentExample=new IndentExample();
+        indentExample.createCriteria().andUserIdEqualTo(id);
+        return indentMapper.selectByExample(indentExample);
+    }
+
     @Override
     public int create(int productId, String color, String configuration, int amount) {
         Indent indent=new Indent();
         indent.setColor(color);
         indent.setProductId(productId);
+        Product product=productMapper.selectByPrimaryKey(productId);
+        indent.setTotalPrice(product.getProductPrice().multiply(BigDecimal.valueOf(amount)));
         indent.setAmount(amount);
         indent.setConfiguration(configuration);
+        indent.setUserId(TokenUtils.getCurrentUser().getId());
         indent.setCommitTime(new Date(System.currentTimeMillis()));
         indent.setStatus("待下单");
         return indentMapper.insert(indent);
