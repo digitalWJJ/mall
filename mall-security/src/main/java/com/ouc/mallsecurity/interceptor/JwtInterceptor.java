@@ -7,7 +7,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.ouc.mallcommon.AuthAccess;
+import com.ouc.mallcommon.annotation.AuthAccess;
 import com.ouc.mallcommon.exception.ServiceException;
 import com.ouc.mallcommon.utils.RedisUtils;
 import com.ouc.mallcommon.utils.TokenUtils;
@@ -24,6 +24,7 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        // 对登录权限进行放行
         if(handler instanceof HandlerMethod){
             if( ((HandlerMethod) handler).getMethodAnnotation(AuthAccess.class) != null) return true;
         }

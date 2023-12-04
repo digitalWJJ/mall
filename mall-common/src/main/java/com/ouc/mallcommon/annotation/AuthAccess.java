@@ -1,4 +1,4 @@
-package com.ouc.mallcommon;
+package com.ouc.mallcommon.annotation;
 
 import java.lang.annotation.*;
 

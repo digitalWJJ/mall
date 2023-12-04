@@ -1,17 +1,24 @@
 package com.ouc.mallsecurity.interceptor;
 
+import com.ouc.mallcommon.annotation.AuthAccess;
 import com.ouc.mallcommon.exception.ServiceException;
 import com.ouc.mallcommon.utils.RedisUtils;
 import com.ouc.mallcommon.utils.TokenUtils;
 import com.ouc.mallmbg.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 public class AdminInterceptor implements HandlerInterceptor {
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        // 对管理员权限进行放行
+        if(handler instanceof HandlerMethod){
+            if( ((HandlerMethod) handler).getMethodAnnotation(AuthAccess.class) != null) return true;
+        }
+
         User user = TokenUtils.getCurrentUser();
         Boolean isUserRoot = RedisUtils.getActivatedUser(user.getId()).getIsRoot();
         if( !isUserRoot ) throw new ServiceException(401, "非法访问");
