@@ -24,19 +24,18 @@ public class ProductController {
 
     @PostMapping("/addproduct")
     public Result addProduct(@RequestBody SplitProduct splitProduct) {
-        productService.addproduct(splitProduct);
-        return Result.result(200, "添加成功", null);
+        if(productService.addproduct(splitProduct)) return Result.result(200, "添加成功", null);
+        else return Result.result(500, "添加失败，请重新操作", null);
     }
     @PostMapping("/updateproduct")
     public Result updateproduct(@RequestBody SplitProduct splitProduct){
-        productService.updateproduct(splitProduct);
-        return Result.result(200, "更新成功", null);
+        if(productService.updateproduct(splitProduct)) return Result.result(200, "更新成功", null);
+        else return Result.result(500, "更新失败，请重新操作", null);
     }
-    @GetMapping("/viewproducts")
-    public Result viewproducts(){
+    @GetMapping("/viewproducts/{pagenumber}")
+    public Result viewproducts(@PathVariable int pagenumber){
         List<SplitProduct> splitProducts = new ArrayList<>();
-        ProductExample productExample = new ProductExample();
-        splitProducts = productService.getproducts(productExample);
+        splitProducts = productService.getproducts(pagenumber);
         if(splitProducts.isEmpty()) {
             return Result.result(500,"获取商品列表失败",null);
         }
@@ -53,8 +52,8 @@ public class ProductController {
     }
     @DeleteMapping("/deleteproduct/{id}")
     public Result deleteproduct(@PathVariable int id){
-        productService.deleteproduct(id);
-        return Result.result(200, "删除成功", null);
+        if(productService.deleteproduct(id)) return Result.result(200, "删除成功", null);
+        else return Result.result(500, "请重新操作", null);
     }
 
 }

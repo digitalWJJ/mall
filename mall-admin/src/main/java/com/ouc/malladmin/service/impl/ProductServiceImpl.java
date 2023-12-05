@@ -1,9 +1,9 @@
 package com.ouc.malladmin.service.impl;
 
-import com.ouc.malladmin.model.ProductModel;
+import com.github.pagehelper.PageHelper;
 import com.ouc.malladmin.service.ProductService;
-import com.ouc.malladmin.utils.SaveFileUtil;
 import com.ouc.mallcommon.dto.SplitProduct;
+import com.ouc.mallcommon.tools.CacheTool;
 import com.ouc.mallcommon.utils.TypeCasting;
 import com.ouc.mallmbg.mapper.ProductMapper;
 import com.ouc.mallmbg.model.Product;
@@ -18,10 +18,8 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductMapper productMapper;
-    @Autowired
-    SaveFileUtil saveFileUtils;
     @Override
-    public void addproduct(SplitProduct splitProduct){
+    public boolean addproduct(SplitProduct splitProduct){
         Product product = new Product();
         product.setProductName(splitProduct.getProductName());
         product.setProductDescription(splitProduct.getProductDescription());
@@ -44,10 +42,10 @@ public class ProductServiceImpl implements ProductService {
             if(4 < splitProduct.getProductImage().size()) product.setProductImage5(splitProduct.getProductImage().get(4));
         }
         product.setCategory(splitProduct.getCategory());
-        productMapper.insert(product);
+        return CacheTool.addProduct(product);
     }
     @Override
-    public void updateproduct(SplitProduct splitProduct){
+    public boolean updateproduct(SplitProduct splitProduct){
         Product product = new Product();
         product.setProductName(splitProduct.getProductName());
         product.setProductDescription(splitProduct.getProductDescription());
@@ -70,10 +68,11 @@ public class ProductServiceImpl implements ProductService {
             if(4 < splitProduct.getProductImage().size()) product.setProductImage5(splitProduct.getProductImage().get(4));
         }
         product.setCategory(splitProduct.getCategory());
-        productMapper.updateByPrimaryKeySelective(product);
+        return CacheTool.updateProduct(product);
     }
     @Override
-    public List<SplitProduct> getproducts(ProductExample productExample){
+    public List<SplitProduct> getproducts(int id){
+        ProductExample productExample = new ProductExample();
         List<Product> products = new ArrayList<>();
         products = productMapper.selectByExample(productExample);
         List<SplitProduct> splitProducts = new ArrayList<>();
@@ -89,7 +88,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public SplitProduct getproduct(Integer id){
         Product product = new Product();
-        product = productMapper.selectByPrimaryKey(id);
+        product = CacheTool.getProduct(id);
         SplitProduct splitProduct = null;
         try {
             splitProduct = TypeCasting.productToSplitProduct(product);
@@ -99,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
         return splitProduct;
     }
     @Override
-    public void deleteproduct(Integer id){
-        productMapper.deleteByPrimaryKey(id);
+    public boolean deleteproduct(Integer id){
+        return CacheTool.deleteProduct(id);
     }
 }

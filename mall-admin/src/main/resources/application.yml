@@ -23,7 +23,8 @@ spring:
     port: 465
     username: "2568840553"
     password: "uexvigssikuxdidb"
-
+  profiles:
+    active: common
 mybatis:
   mapper-locations:
     - classpath:mapper/*.xml
