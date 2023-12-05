@@ -3,13 +3,17 @@ package com.ouc.mallcommon.tools;
 import com.ouc.mallcommon.utils.RedisUtils;
 import com.ouc.mallmbg.mapper.IndentMapper;
 import com.ouc.mallmbg.mapper.ProductMapper;
+import com.ouc.mallmbg.mapper.UserMapper;
 import com.ouc.mallmbg.model.Indent;
+import com.ouc.mallmbg.model.PageParam;
 import com.ouc.mallmbg.model.Product;
+import com.ouc.mallmbg.model.User;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 @Component
 public class CacheTool {
 
@@ -18,11 +22,16 @@ public class CacheTool {
     private static ProductMapper productMapper;
     private static IndentMapper indentMapper;
 
+    private static UserMapper userMapper;
+
     @Autowired
     private ProductMapper productMapperInit;
 
     @Autowired
     private IndentMapper indentMapperInit;
+
+    @Autowired
+    private UserMapper userMapperInit;
 
     private static final String productPrefixed = "product-";
     private static final String indentPrefixed = "indent-";
@@ -31,6 +40,7 @@ public class CacheTool {
     public void initCacheTool(){
         CacheTool.productMapper = productMapperInit;
         CacheTool.indentMapper = indentMapperInit;
+        CacheTool.userMapper = userMapperInit;
     }
 
     /**
@@ -48,6 +58,15 @@ public class CacheTool {
         product = productMapper.selectByPrimaryKey(productId); // 如果没有就会返回null
         if(product != null) RedisUtils.set(key, product, expiration);
         return product;
+    }
+
+    /**
+     * 分页查询指定页面的商品
+     * @param pageParam 需要查询的页面的相关内容
+     * @return 有指定的id 就返回查询的结果, 没有的话就返回为空
+     * */
+    public static List<Product> getProducts(PageParam pageParam){
+        return productMapper.selectByPage(pageParam);
     }
 
     /**
@@ -117,6 +136,15 @@ public class CacheTool {
     }
 
     /**
+     * 分页查询指定页面的订单
+     * @param pageParam 需要查询的页面的相关内容
+     * @return 有指定的id 就返回查询的结果, 没有的话就返回为空
+     * */
+    public static List<Indent> getIndents(PageParam pageParam){
+        return indentMapper.selectByPage(pageParam);
+    }
+
+    /**
      * 添加指定的订单
      * @param indent 订单
      * @return 是否添加成功
@@ -162,6 +190,15 @@ public class CacheTool {
         RedisUtils.del(key);
         boolean isCacheDel = RedisUtils.get(key) == null;
         return isDBDel && isCacheDel;
+    }
+
+    /**
+     * 分页查询指定页面的用户
+     * @param pageParam 需要查询的页面的相关内容
+     * @return 有指定的id 就返回查询的结果, 没有的话就返回为空
+     * */
+    public static List<User> getUsers(PageParam pageParam){
+        return userMapper.selectByPage(pageParam);
     }
 
     @Value("${cache.expiration}")

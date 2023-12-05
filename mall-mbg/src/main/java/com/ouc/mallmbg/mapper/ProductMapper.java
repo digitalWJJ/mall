@@ -1,5 +1,6 @@
 package com.ouc.mallmbg.mapper;
 
+import com.ouc.mallmbg.model.PageParam;
 import com.ouc.mallmbg.model.Product;
 import com.ouc.mallmbg.model.ProductExample;
 import java.util.List;
@@ -27,4 +28,6 @@ public interface ProductMapper {
     int updateByPrimaryKeySelective(Product row);
 
     int updateByPrimaryKey(Product row);
+
+    List<Product> selectByPage(PageParam pageParam);
 }
