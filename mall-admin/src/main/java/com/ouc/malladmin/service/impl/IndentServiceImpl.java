@@ -1,6 +1,7 @@
 package com.ouc.malladmin.service.impl;
 
 import com.ouc.malladmin.service.IndentService;
+import com.ouc.mallcommon.tools.CacheTool;
 import com.ouc.mallmbg.mapper.IndentMapper;
 import com.ouc.mallmbg.model.Indent;
 import com.ouc.mallmbg.model.IndentExample;
@@ -23,15 +24,15 @@ public class IndentServiceImpl implements IndentService {
     @Override
     public Indent getindent(Integer id){
         Indent indent = new Indent();
-        indent = indentMapper.selectByPrimaryKey(id);
+        indent = CacheTool.getIndent(id);
         return indent;
     }
     @Override
-    public  void deleteindent(Integer id){
-        indentMapper.deleteByPrimaryKey(id);
+    public boolean deleteindent(Integer id){
+        return CacheTool.deleteIndent(id);
     }
     @Override
-    public void updateindent(Indent indent){
-        indentMapper.updateByPrimaryKeySelective(indent);
+    public boolean updateindent(Indent indent){
+        return CacheTool.updateIndent(indent);
     }
 }

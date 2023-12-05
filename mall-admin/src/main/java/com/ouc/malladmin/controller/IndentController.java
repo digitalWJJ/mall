@@ -38,12 +38,12 @@ public class IndentController {
     }
     @PostMapping("/updateorder")
     public Result updateIndent(@RequestBody Indent Indent){
-        IndentService.updateindent(Indent);
-        return Result.result(200, "更新订单成功", null);
+        if(IndentService.updateindent(Indent)) return Result.result(200, "更新订单成功", null);
+        else return Result.result(500, "请重新操作", null);
     }
     @DeleteMapping("/deleteorder/{id}")
     public Result deleteIndent(@PathVariable int id){
-        IndentService.deleteindent(id);
-        return Result.result(200, "删除订单成功", null);
+        if(IndentService.deleteindent(id)) return Result.result(200, "删除订单成功", null);
+        else return Result.result(500, "请重新操作", null);
     }
 }

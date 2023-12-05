@@ -9,10 +9,10 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductService {
-    void addproduct(SplitProduct splitProduct);
-    void updateproduct(SplitProduct splitProduct);
-    List<SplitProduct> getproducts(ProductExample productExample);
-    void deleteproduct(Integer id);
+    boolean addproduct(SplitProduct splitProduct);
+    boolean updateproduct(SplitProduct splitProduct);
+    List<SplitProduct> getproducts(int id);
+    boolean deleteproduct(Integer id);
     SplitProduct getproduct(Integer id);
 
 }
