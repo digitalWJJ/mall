@@ -4,12 +4,14 @@ import com.ouc.mallcommon.utils.RedisUtils;
 import com.ouc.mallmbg.mapper.IndentMapper;
 import com.ouc.mallmbg.mapper.ProductMapper;
 import com.ouc.mallmbg.model.Indent;
+import com.ouc.mallmbg.model.PageParam;
 import com.ouc.mallmbg.model.Product;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 @Component
 public class CacheTool {
 
@@ -48,6 +50,15 @@ public class CacheTool {
         product = productMapper.selectByPrimaryKey(productId); // 如果没有就会返回null
         if(product != null) RedisUtils.set(key, product, expiration);
         return product;
+    }
+
+    /**
+     * 分页查询指定页面的商品
+     * @param pageParam 需要查询的页面的相关内容
+     * @return 有指定的id 就返回查询的结果, 没有的话就返回为空
+     * */
+    public static List<Product> getProducts(PageParam pageParam){
+        return productMapper.selectByPage(pageParam);
     }
 
     /**
@@ -114,6 +125,15 @@ public class CacheTool {
         indent = indentMapper.selectByPrimaryKey(indentId); // 如果没有就会返回null
         if(indent != null) RedisUtils.set(key, indent, expiration);
         return indent;
+    }
+
+    /**
+     * 分页查询指定页面的商品
+     * @param pageParam 需要查询的页面的相关内容
+     * @return 有指定的id 就返回查询的结果, 没有的话就返回为空
+     * */
+    public static List<Indent> getIndents(PageParam pageParam){
+        return indentMapper.selectByPage(pageParam);
     }
 
     /**

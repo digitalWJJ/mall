@@ -1,5 +1,6 @@
 package com.ouc.mallmbg.mapper;
 
+import com.ouc.mallmbg.model.PageParam;
 import com.ouc.mallmbg.model.User;
 import com.ouc.mallmbg.model.UserExample;
 import java.util.List;
@@ -27,4 +28,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User row);
 
     int updateByPrimaryKey(User row);
+
+    List<User> selectByPage(PageParam pageParam);
 }

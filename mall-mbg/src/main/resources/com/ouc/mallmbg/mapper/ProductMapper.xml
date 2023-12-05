@@ -97,6 +97,9 @@
     from product
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByPage" parameterType="com.ouc.mallmbg.model.PageParam" resultMap="BaseResultMap" >
+    select * from product limit ${(pageIndex-1) * pageSize}, #{pageSize}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from product
     where id = #{id,jdbcType=INTEGER}

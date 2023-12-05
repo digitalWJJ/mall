@@ -94,6 +94,9 @@
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByPage" parameterType="com.ouc.mallmbg.model.PageParam" resultMap="BaseResultMap" >
+    select * from user limit ${(pageIndex-1) * pageSize}, #{pageSize}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
     where id = #{id,jdbcType=INTEGER}
