@@ -5,6 +5,7 @@ import com.ouc.mallcommon.Result;
 import com.ouc.mallmbg.mapper.IndentMapper;
 import com.ouc.mallmbg.model.Indent;
 import com.ouc.mallmbg.model.IndentExample;
+import com.ouc.mallmbg.model.PageParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +19,8 @@ public class IndentController {
     @Autowired
     IndentService IndentService;
     @GetMapping("/vieworders")
-    public Result vieworders(){
-        List<Indent> IndentList = new ArrayList<>();
-        IndentExample IndentExample = new IndentExample();
-        IndentList = IndentService.getindents(IndentExample);
+    public Result vieworders(@RequestBody PageParam pageParam){
+        List<Indent> IndentList = IndentService.getindents(pageParam);
         if(IndentList.isEmpty()) {
             return Result.result(500,"获取订单列表失败",null);
         }
@@ -29,8 +28,7 @@ public class IndentController {
     }
     @GetMapping("/vieworder/{id}")
     public Result vieworeder(@PathVariable int id){
-        Indent Indent = new Indent();
-        Indent = IndentService.getindent(id);
+        Indent Indent = IndentService.getindent(id);
         if(Indent==null) {
             return Result.result(500,"获取订单信息失败",null);
         }
