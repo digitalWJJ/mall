@@ -6,6 +6,7 @@ import com.ouc.malladmin.utils.SaveFileUtil;
 import com.ouc.mallcommon.Result;
 import com.ouc.mallcommon.dto.SplitProduct;
 import com.ouc.mallmbg.mapper.ProductMapper;
+import com.ouc.mallmbg.model.PageParam;
 import com.ouc.mallmbg.model.ProductExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +17,7 @@ import java.util.List;
 @RequestMapping(value = "/api/admin/product")
 public class ProductController {
     @Autowired
-    ProductMapper productMapper;
-    @Autowired
     ProductService productService;
-    @Autowired
-    SaveFileUtil saveFileUtil;
 
     @PostMapping("/addproduct")
     public Result addProduct(@RequestBody SplitProduct splitProduct) {
@@ -32,10 +29,10 @@ public class ProductController {
         if(productService.updateproduct(splitProduct)) return Result.result(200, "更新成功", null);
         else return Result.result(500, "更新失败，请重新操作", null);
     }
-    @GetMapping("/viewproducts/{pagenumber}")
-    public Result viewproducts(@PathVariable int pagenumber){
+    @GetMapping("/viewproducts")
+    public Result viewproducts(@RequestBody PageParam pageParam){
         List<SplitProduct> splitProducts = new ArrayList<>();
-        splitProducts = productService.getproducts(pagenumber);
+        splitProducts = productService.getproducts(pageParam);
         if(splitProducts.isEmpty()) {
             return Result.result(500,"获取商品列表失败",null);
         }
@@ -43,8 +40,7 @@ public class ProductController {
     }
     @GetMapping("/viewproduct/{id}")
     public Result viewproduct(@PathVariable int id){
-        SplitProduct splitProduct = new SplitProduct();
-        splitProduct = productService.getproduct(id);
+        SplitProduct splitProduct = productService.getproduct(id);
         if(splitProduct==null) {
             return Result.result(500,"获取商品失败",null);
         }

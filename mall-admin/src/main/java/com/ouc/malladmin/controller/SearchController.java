@@ -20,8 +20,7 @@ public class SearchController {
     SearchService searchService;
     @GetMapping("/searchbykey/{key}")
     public Result searchbywords(@PathVariable String key){
-        List<SplitProduct> productList = new ArrayList<>();
-        productList = searchService.searchbywords(key);
+        List<SplitProduct> productList = searchService.searchbywords(key);
         if(productList.isEmpty()) {
             return Result.result(500,"获取商品列表失败",null);
         }
@@ -29,9 +28,7 @@ public class SearchController {
     }
     @GetMapping("/searchbycategory/{id}")
     public Result searchbysearchbycategory(@PathVariable int id){
-        Result result = new Result();
-        List<SplitProduct> productList = new ArrayList<>();
-        productList = searchService.searchbycategory(id);
+        List<SplitProduct> productList = searchService.searchbycategory(id);
         if(productList.isEmpty()) {
             return Result.result(500,"获取商品列表失败",null);
         }
@@ -39,8 +36,7 @@ public class SearchController {
     }
     @GetMapping("/searchcombine/{key}/{id}")
     public Result searchbysearchbycategory(@PathVariable String key, @PathVariable int id){
-        List<SplitProduct> productList = new ArrayList<>();
-        productList = searchService.searchcombine(key, id);
+        List<SplitProduct> productList = searchService.searchcombine(key, id);
         if(productList.isEmpty()) {
             return Result.result(500,"获取商品列表失败",null);
         }

@@ -17,10 +17,8 @@ public class UserController {
     @Autowired
     UserService userService;
     @GetMapping("/viewusers")
-    public Result viewusers(){
-        List<User> usersList = new ArrayList<>();
-        UserExample userExample = new UserExample();
-        usersList = userService.getusers(userExample);
+    public Result viewusers(@RequestBody PageParam pageParam){
+        List<User> usersList = userService.getusers(pageParam);
         if(usersList.isEmpty()) {
             return Result.result(500,"获取用户列表失败",null);
         }
@@ -29,8 +27,7 @@ public class UserController {
 
     @GetMapping("/viewuser/{id}")
     public Result viewuser(@PathVariable int id){
-        User user = new User();
-        user = userService.getuser(id);
+        User user = userService.getuser(id);
         if(user==null) {
             return Result.result(500,"获取用户信息失败",null);
         }
@@ -39,7 +36,6 @@ public class UserController {
     @DeleteMapping("/deleteuser/{id}")
     public Result deleteuser(@PathVariable int id){
         userService.deleteuser(id);
-        Result result = new Result();
         return Result.result(200, "删除成功", null);
     }
 }
