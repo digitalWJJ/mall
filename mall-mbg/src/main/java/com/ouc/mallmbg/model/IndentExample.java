@@ -12,6 +12,26 @@ public class IndentExample {
 
     protected List<Criteria> oredCriteria;
 
+    protected Integer limitStart;
+
+    protected Integer limitSize;
+
+    public void setLimitStart(Integer limitStart) {
+        this.limitStart = limitStart;
+    }
+
+    public Integer getLimitStart() {
+        return limitStart;
+    }
+
+    public void setLimitSize(Integer limitSize) {
+        this.limitSize = limitSize;
+    }
+
+    public Integer getLimitSize() {
+        return limitSize;
+    }
+
     public IndentExample() {
         oredCriteria = new ArrayList<>();
     }
