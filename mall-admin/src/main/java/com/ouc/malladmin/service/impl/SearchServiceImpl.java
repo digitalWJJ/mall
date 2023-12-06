@@ -7,9 +7,8 @@ import com.ouc.malladmin.service.SearchService;
 import com.ouc.malladmin.utils.TosplitproductUtil;
 import com.ouc.mallcommon.dto.SplitProduct;
 import com.ouc.mallmbg.mapper.ProductMapper;
-import com.ouc.mallmbg.model.PageParam;
-import com.ouc.mallmbg.model.Product;
-import com.ouc.mallmbg.model.ProductExample;
+import com.ouc.mallmbg.mapper.UserMapper;
+import com.ouc.mallmbg.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +17,8 @@ import java.util.List;
 public class SearchServiceImpl implements SearchService {
     @Autowired
     ProductMapper productMapper;
+    @Autowired
+    UserMapper userMapper;
     @Override
     public List<SplitProduct> searchbywords(SearchModel searchModel){
         ProductExample example = new ProductExample();
@@ -26,7 +27,6 @@ public class SearchServiceImpl implements SearchService {
         example.setLimitStart((searchModel.getPageIndex()-1) * searchModel.getPageSize());
         example.setLimitSize(searchModel.getPageSize());
         List<Product> productList= productMapper.selectByExample(example);
-        System.out.println(productList);
         List<SplitProduct> splitProducts = TosplitproductUtil.getSplitproducts(productList);
         return splitProducts;
     }
@@ -55,4 +55,15 @@ public class SearchServiceImpl implements SearchService {
         List<SplitProduct> splitProducts = TosplitproductUtil.getSplitproducts(productList);
         return splitProducts;
     }
+    @Override
+    public List<User> searchuser(SearchModel searchModel){
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        criteria.andUserNameLike('%' + searchModel.getKey() + '%');
+        userExample.setLimitStart((searchModel.getPageIndex()-1) * searchModel.getPageSize());
+        userExample.setLimitSize(searchModel.getPageSize());
+        List<User> users= userMapper.selectByExample(userExample);
+        return users;
+    }
+
 }
