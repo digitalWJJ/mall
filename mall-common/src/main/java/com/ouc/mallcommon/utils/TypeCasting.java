@@ -33,8 +33,8 @@ public class TypeCasting {
         return imgUrlLit;
     }
     public static SplitProduct productToSplitProduct(Product product) throws ClientException {
-        List<String> colors= List.of(product.getColor().toString().split("|"));
-        List<String> configurations=List.of(product.getConfiguration().split("|"));
+        List<String> colors= List.of(product.getColor().toString().split("\\|"));
+        List<String> configurations=List.of(product.getConfiguration().split("\\|"));
         List<String> productImages=new ArrayList<>();
         if(product.getProductImage1()!=null)productImages.add("productImg/"+product.getProductImage1());
         if(product.getProductImage2()!=null)productImages.add("productImg/"+product.getProductImage2());
@@ -45,8 +45,8 @@ public class TypeCasting {
     }
     public static Product splitProductToProduct(SplitProduct splitProduct)
     {
-        String color= StringUtils.join(splitProduct.getColor(),'\\|');
-        String configuration=StringUtils.join(splitProduct.getConfiguration(),'\\|');
+        String color= StringUtils.join(splitProduct.getColor(),'|');
+        String configuration=StringUtils.join(splitProduct.getConfiguration(),'|');
         List<String> productImages=splitProduct.getProductImage();
         for(int i=productImages.size();i<5;i++)
         {
