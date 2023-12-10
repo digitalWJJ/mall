@@ -45,8 +45,8 @@ public class TypeCasting {
     }
     public static Product splitProductToProduct(SplitProduct splitProduct)
     {
-        String color= StringUtils.join(splitProduct.getColor(),'|');
-        String configuration=StringUtils.join(splitProduct.getConfiguration(),'|');
+        String color= StringUtils.join(splitProduct.getColor(),'\\|');
+        String configuration=StringUtils.join(splitProduct.getConfiguration(),'\\|');
         List<String> productImages=splitProduct.getProductImage();
         for(int i=productImages.size();i<5;i++)
         {
