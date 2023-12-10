@@ -11,6 +11,7 @@ import com.ouc.mallproduct.service.ProductService;
 import com.ouc.mallcommon.Result;
 
 @Controller
+@RequestMapping("/api")
 public class ProductController {
     @Resource
     ProductService productService;

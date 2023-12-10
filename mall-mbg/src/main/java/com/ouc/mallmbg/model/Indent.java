@@ -19,7 +19,7 @@ public class Indent implements Serializable {
 
     private Integer amount;
 
-    private String status;
+    private String indentStatus;
 
     private String address;
 
@@ -87,12 +87,12 @@ public class Indent implements Serializable {
         this.amount = amount;
     }
 
-    public String getStatus() {
-        return status;
+    public String getIndentStatus() {
+        return indentStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setIndentStatus(String indentStatus) {
+        this.indentStatus = indentStatus;
     }
 
     public String getAddress() {
@@ -140,7 +140,7 @@ public class Indent implements Serializable {
         sb.append(", productId=").append(productId);
         sb.append(", totalPrice=").append(totalPrice);
         sb.append(", amount=").append(amount);
-        sb.append(", status=").append(status);
+        sb.append(", indentStatus=").append(indentStatus);
         sb.append(", address=").append(address);
         sb.append(", phoneNumber=").append(phoneNumber);
         sb.append(", color=").append(color);

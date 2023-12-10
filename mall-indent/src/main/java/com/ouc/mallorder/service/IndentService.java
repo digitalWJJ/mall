@@ -3,8 +3,11 @@ package com.ouc.mallorder.service;
 import java.util.List;
 
 import com.ouc.mallmbg.model.Indent;
+import dto.ProductIdsAndOtherInfo;
 
 public interface IndentService {
+
+    Indent getItem(int id);
     int deleteItem(int id);
 
     int updateAmount(int id, int amount);
@@ -14,5 +17,9 @@ public interface IndentService {
 
     List<Indent> getAllList(int id);
 
+    List<Indent> getListByIds(List<Integer> ids);
+
     int deleteList(List<Integer> ids);
+
+    int updateAfterBuy(ProductIdsAndOtherInfo productIdsAndOtherInfo);
 }

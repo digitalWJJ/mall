@@ -10,6 +10,7 @@ import com.ouc.mallmbg.model.UserExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -35,12 +36,13 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public int updateUserInfo(int id,String userName, String gender, String stateMessage) {
+    public int updateUserInfo(int id, String userName, String gender, String stateMessage, String userImg) {
        User user=new User();
        user.setId(id);
        user.setUserName(userName);
        user.setGender(gender);
        user.setStateMessage(stateMessage);
+       user.setUserImage(userImg);
        return userMapper.updateByPrimaryKeySelective(user);
     }
 }
