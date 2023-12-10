@@ -18,7 +18,7 @@ public class IndentController {
     IndentMapper indentMapper;
     @Autowired
     IndentService IndentService;
-    @GetMapping("/vieworders")
+    @PostMapping("/vieworders")
     public Result vieworders(@RequestBody PageParam pageParam){
         List<Indent> IndentList = IndentService.getindents(pageParam);
         if(IndentList.isEmpty()) {

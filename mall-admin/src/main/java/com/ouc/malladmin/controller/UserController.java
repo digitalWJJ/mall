@@ -13,10 +13,23 @@ import java.util.List;
 @RequestMapping(value = "/api/admin/user")
 public class UserController {
     @Autowired
-    UserMapper userMapper;
-    @Autowired
     UserService userService;
-    @GetMapping("/viewusers")
+
+    @PostMapping("/adduser")
+    public Result adduser(@RequestBody User user){
+        if(userService.adduser(user)==0){
+            return Result.result(500,"添加用户失败",null);
+        }
+        else return Result.result(200,"添加用户成功",null);
+    }
+    @PostMapping("/updateuser")
+    public Result updateuser(@RequestBody User user){
+        if(userService.updateuser(user) ==0){
+            return Result.result(500,"更新用户信息失败",null);
+        }
+        else return Result.result(200,"更新用户信息成功",null);
+    }
+    @PostMapping("/viewusers")
     public Result viewusers(@RequestBody PageParam pageParam){
         List<User> usersList = userService.getusers(pageParam);
         if(usersList.isEmpty()) {

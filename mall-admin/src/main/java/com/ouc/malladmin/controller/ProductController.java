@@ -29,7 +29,7 @@ public class ProductController {
         if(productService.updateproduct(splitProduct)) return Result.result(200, "更新成功", null);
         else return Result.result(500, "更新失败，请重新操作", null);
     }
-    @GetMapping("/viewproducts")
+    @PostMapping("/viewproducts")
     public Result viewproducts(@RequestBody PageParam pageParam){
         List<SplitProduct> splitProducts = new ArrayList<>();
         splitProducts = productService.getproducts(pageParam);
