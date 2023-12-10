@@ -10,4 +10,6 @@ public interface UserService {
     List<User> getusers(PageParam pageParam);
     User getuser(Integer id);
     void deleteuser(Integer id);
+    int adduser(User user);
+    int updateuser(User user);
 }

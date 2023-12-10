@@ -29,4 +29,14 @@ public class UserServiceImpl implements UserService {
     public void deleteuser(Integer id){
         userMapper.deleteByPrimaryKey(id);
     }
+    @Override
+    public int adduser(User user){
+        int j = userMapper.insert(user);
+        return j;
+    }
+    @Override
+    public int updateuser(User user){
+        int j = userMapper.updateByPrimaryKeySelective(user);
+        return j;
+    }
 }
