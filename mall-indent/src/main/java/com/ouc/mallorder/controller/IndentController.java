@@ -1,8 +1,10 @@
 package com.ouc.mallorder.controller;
 
 import com.ouc.mallcommon.Result;
+import com.ouc.mallcommon.utils.TokenUtils;
 import com.ouc.mallmbg.model.Indent;
 import com.ouc.mallorder.service.IndentService;
+import dto.ProductIdsAndOtherInfo;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +17,11 @@ public class IndentController {
     @Resource
     private IndentService indentService;
 
-    @RequestMapping (value = "/get/{userId}",method = RequestMethod.GET)
+    @RequestMapping (value = "/get/",method = RequestMethod.GET)
     @ResponseBody
-    public Result getOrdersInMyCart(@PathVariable("userId")int userId)
+    public Result getOrdersInMyCart()
     {
+        int userId=TokenUtils.getCurrentUser().getId();
         List<Indent> indentList= indentService.getList(userId);
         if(indentList.size()==0)
             return Result.result(500,"获取不到数据",null);
@@ -51,16 +54,6 @@ public class IndentController {
            return  Result.result(500,"更改数量失败",null);
         }
     }
-    @RequestMapping(value = "/buy/{userId}",method = RequestMethod.GET)
-    @ResponseBody
-    public Result confirmBuyOrderInMyCart(@PathVariable("userId") int userId)
-    {
-        List<Indent> indentList= indentService.getList(userId);
-        if(indentList.size()==0)
-            return Result.result(500,"获取不到数据",null);
-        return Result.result(200,"购买成功",indentList);
-    }
-
     @RequestMapping(value = "/add/{productId}",method = RequestMethod.POST)
     @ResponseBody
     public Result addProductIntoMyCart(@PathVariable("productId") int productId,String color,String configuration,int amount)
@@ -105,14 +98,25 @@ public class IndentController {
         return Result.result(500,"删除多个订单条目失败",null);
     }
 
-    @RequestMapping (value = "/allIndent/get/{userId}",method = RequestMethod.GET)
+    @RequestMapping (value = "/allIndent/get/",method = RequestMethod.GET)
     @ResponseBody
-    public Result getAllIndent(@PathVariable("userId")int userId)
+    public Result getAllIndent()
     {
+        int userId=TokenUtils.getCurrentUser().getId();
         List<Indent> indentList= indentService.getAllList(userId);
         if(indentList.size()==0)
             return Result.result(500,"获取不到数据",null);
         Result result=new Result(200,"获取用户所有订单成功",indentList);
+        return result;
+    }
+
+    @RequestMapping (value = "/mycart/buy",method = RequestMethod.POST)
+    @ResponseBody
+    public Result buyIndentsInMyCart(@RequestBody ProductIdsAndOtherInfo productIdsAndOtherInfo)
+    {
+        if(indentService.updateAfterBuy(productIdsAndOtherInfo)<productIdsAndOtherInfo.getIndentIds().size())
+            return Result.result(500,"购买失败",null);
+        Result result=new Result(200,"购买成功",null);
         return result;
     }
 }

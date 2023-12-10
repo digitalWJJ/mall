@@ -7,6 +7,7 @@ import com.ouc.mallmbg.model.Indent;
 import com.ouc.mallmbg.model.IndentExample;
 import com.ouc.mallmbg.model.Product;
 import com.ouc.mallorder.service.IndentService;
+import dto.ProductIdsAndOtherInfo;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +41,18 @@ public class IndentServiceImpl implements IndentService {
     }
 
     @Override
+    public int updateAfterBuy(ProductIdsAndOtherInfo productIdsAndOtherInfo) {
+        IndentExample indentExample=new IndentExample();
+        indentExample.createCriteria().andIdIn(productIdsAndOtherInfo.getIndentIds());
+        Indent indent=new Indent();
+        indent.setIndentStatus("已付款");
+        indent.setAddress(productIdsAndOtherInfo.getAddress());
+        indent.setPhoneNumber(productIdsAndOtherInfo.getPhoneNumber());
+        indent.setReceiverName(productIdsAndOtherInfo.getReceiverName());
+        return indentMapper.updateByExampleSelective(indent,indentExample);
+    }
+
+    @Override
     public int updateAmount(int id, int amount) {
         Indent indent= indentMapper.selectByPrimaryKey(id);
         if(indent==null)return 0;
@@ -53,7 +66,7 @@ public class IndentServiceImpl implements IndentService {
         IndentExample.Criteria criteria=indentExample.createCriteria();
         criteria.andUserIdEqualTo(id);
         List<Indent> indentList= indentMapper.selectByExample(indentExample);
-        criteria.andStatusEqualTo("待下单");
+        criteria.andIndentStatusEqualTo("待下单");
         return indentList;
     }
 
@@ -71,6 +84,8 @@ public class IndentServiceImpl implements IndentService {
         return indentMapper.selectByExample(indentExample);
     }
 
+
+
     @Override
     public int create(int productId, String color, String configuration, int amount) {
         Indent indent=new Indent();
@@ -82,7 +97,7 @@ public class IndentServiceImpl implements IndentService {
         indent.setConfiguration(configuration);
         indent.setUserId(TokenUtils.getCurrentUser().getId());
         indent.setCommitTime(new Date(System.currentTimeMillis()));
-        indent.setStatus("待下单");
+        indent.setIndentStatus("待下单");
         return indentMapper.insert(indent);
 
     }
