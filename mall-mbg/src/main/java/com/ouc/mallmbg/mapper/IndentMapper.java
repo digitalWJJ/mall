@@ -3,6 +3,7 @@ package com.ouc.mallmbg.mapper;
 import com.ouc.mallmbg.model.Indent;
 import com.ouc.mallmbg.model.IndentExample;
 import java.util.List;
+import com.ouc.mallmbg.model.PageParam;
 import org.apache.ibatis.annotations.Param;
 
 public interface IndentMapper {
@@ -27,4 +28,6 @@ public interface IndentMapper {
     int updateByPrimaryKeySelective(Indent row);
 
     int updateByPrimaryKey(Indent row);
+
+    List<Indent> selectByPage(PageParam pageParam);
 }

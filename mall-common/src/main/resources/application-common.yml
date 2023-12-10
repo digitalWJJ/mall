@@ -9,3 +9,5 @@ OSS_ACCESS_KEY_ID:
 
 OSS_ACCESS_KEY_SECRET:
   CwbQ3RJiNYFtdYGkLQ9RwenCbXJVmw
+cache:
+  expiration: 300

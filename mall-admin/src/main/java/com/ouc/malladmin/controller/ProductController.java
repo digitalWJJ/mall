@@ -5,10 +5,8 @@ import com.ouc.malladmin.service.ProductService;
 import com.ouc.malladmin.utils.SaveFileUtil;
 import com.ouc.mallcommon.Result;
 import com.ouc.mallcommon.dto.SplitProduct;
-import com.ouc.mallcommon.utils.OSS;
-import com.ouc.mallcommon.utils.TypeCasting;
 import com.ouc.mallmbg.mapper.ProductMapper;
-import com.ouc.mallmbg.model.Product;
+import com.ouc.mallmbg.model.PageParam;
 import com.ouc.mallmbg.model.ProductExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,55 +17,39 @@ import java.util.List;
 @RequestMapping(value = "/api/admin/product")
 public class ProductController {
     @Autowired
-    ProductMapper productMapper;
-    @Autowired
     ProductService productService;
-    @Autowired
-    SaveFileUtil saveFileUtil;
 
     @PostMapping("/addproduct")
-    public Result addProduct(@RequestBody ProductModel productModel) {
-        productService.addproduct(productModel);
-        return Result.result(200, "添加成功", null);
+    public Result addProduct(@RequestBody SplitProduct splitProduct) {
+        if(productService.addproduct(splitProduct)) return Result.result(200, "添加成功", null);
+        else return Result.result(500, "添加失败，请重新操作", null);
     }
-    @PostMapping("/update")
-    public Result updateproduct(@RequestBody ProductModel productModel){
-        productService.updateproduct(productModel);
-        return Result.result(200, "更新成功", null);
+    @PostMapping("/updateproduct")
+    public Result updateproduct(@RequestBody SplitProduct splitProduct){
+        if(productService.updateproduct(splitProduct)) return Result.result(200, "更新成功", null);
+        else return Result.result(500, "更新失败，请重新操作", null);
     }
     @GetMapping("/viewproducts")
-    public Result viewproducts(){
+    public Result viewproducts(@RequestBody PageParam pageParam){
         List<SplitProduct> splitProducts = new ArrayList<>();
-        ProductExample productExample = new ProductExample();
-        splitProducts = productService.getproducts(productExample);
-        if(splitProducts==null) {
+        splitProducts = productService.getproducts(pageParam);
+        if(splitProducts.isEmpty()) {
             return Result.result(500,"获取商品列表失败",null);
         }
         else return Result.success(splitProducts);
     }
     @GetMapping("/viewproduct/{id}")
     public Result viewproduct(@PathVariable int id){
-        SplitProduct splitProduct = new SplitProduct();
-        splitProduct = productService.getproduct(id);
+        SplitProduct splitProduct = productService.getproduct(id);
         if(splitProduct==null) {
             return Result.result(500,"获取商品失败",null);
         }
         else return Result.success(splitProduct);
     }
-    @GetMapping("/getimage/{base}")
-    public Result getimage(@PathVariable String base){
-        String url = null;
-        try {
-            url = OSS.getProductImgUrl(saveFileUtil.savefile(base), 0);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return Result.result(200,"获取图片成功", saveFileUtil.savefile(base));
-    }
     @DeleteMapping("/deleteproduct/{id}")
     public Result deleteproduct(@PathVariable int id){
-        productService.deleteproduct(id);
-        return Result.result(200, "删除成功", null);
+        if(productService.deleteproduct(id)) return Result.result(200, "删除成功", null);
+        else return Result.result(500, "请重新操作", null);
     }
 
 }

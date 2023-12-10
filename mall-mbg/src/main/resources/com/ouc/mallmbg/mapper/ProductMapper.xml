@@ -90,12 +90,18 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+    <if test="limitStart != null and limitSize &gt;= 0">
+      limit #{limitStart} , #{limitSize}
+    </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from product
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPage" parameterType="com.ouc.mallmbg.model.PageParam" resultMap="BaseResultMap" >
+    select * from product limit ${(pageIndex-1) * pageSize}, #{pageSize}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from product

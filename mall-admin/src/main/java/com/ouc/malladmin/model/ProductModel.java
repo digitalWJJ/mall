@@ -23,7 +23,6 @@ public class ProductModel {
     public int getId(){
         return id;
     }
-
     public String getProductName() {
         return productName;
     }
