@@ -23,6 +23,11 @@ public class IndentServiceImpl implements IndentService {
     private ProductMapper productMapper;
 
     @Override
+    public Indent getItem(int id) {
+        return indentMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public int deleteItem(int id) {
         return indentMapper.deleteByPrimaryKey(id);
     }
@@ -56,6 +61,13 @@ public class IndentServiceImpl implements IndentService {
     public List<Indent> getAllList(int id) {
         IndentExample indentExample=new IndentExample();
         indentExample.createCriteria().andUserIdEqualTo(id);
+        return indentMapper.selectByExample(indentExample);
+    }
+
+    @Override
+    public List<Indent> getListByIds(List<Integer> ids) {
+        IndentExample indentExample=new IndentExample();
+        indentExample.createCriteria().andIdIn(ids);
         return indentMapper.selectByExample(indentExample);
     }
 

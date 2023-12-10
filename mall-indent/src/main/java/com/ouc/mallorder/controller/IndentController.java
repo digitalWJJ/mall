@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/mycart")
+@RequestMapping("/api/mycart")
 public class IndentController {
     @Resource
     private IndentService indentService;
@@ -70,9 +70,33 @@ public class IndentController {
         else return  Result.result(500,"添加购物车失败",null);
     }
 
+    @RequestMapping(value = "/confirmList/",method = RequestMethod.POST)
+    @ResponseBody
+    public Result confirmBuyProducts(@RequestBody List<Integer> ids)
+    {
+        List<Indent> indentList=indentService.getListByIds(ids);
+        if(indentList.size()!=ids.size())
+        {
+            return Result.result(500,"确认订单失败",null);
+        }
+        return Result.result(200,"确认订单成功",indentList);
+    }
+
+    @RequestMapping(value = "/confirmOne/",method = RequestMethod.POST)
+    @ResponseBody
+    public Result confirmBuyOneProduct(@RequestBody Integer id)
+    {
+        Indent indent=indentService.getItem(id);
+        if(indent==null)
+        {
+            return Result.result(500,"确认订单失败",null);
+        }
+        return Result.result(200,"确认订单成功",indent);
+    }
+
     @RequestMapping(value = "/deleteList",method = RequestMethod.DELETE)
     @ResponseBody
-    public Result deleteMultipleOrdersInMyCart(@RequestParam("ids") List<Integer> ids)
+    public Result deleteMultipleOrdersInMyCart(@RequestBody List<Integer> ids)
     {
         if(indentService.deleteList(ids)>0)
         {

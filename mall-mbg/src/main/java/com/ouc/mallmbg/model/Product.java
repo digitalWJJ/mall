@@ -1,8 +1,11 @@
 package com.ouc.mallmbg.model;
 
+import lombok.AllArgsConstructor;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+@AllArgsConstructor
 public class Product implements Serializable {
     private Integer id;
 

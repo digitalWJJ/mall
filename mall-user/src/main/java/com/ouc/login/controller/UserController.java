@@ -7,7 +7,10 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Base64;
+
 @Controller
+@RequestMapping("/api")
 public class UserController {
     @Resource
     private UserService userService;
@@ -34,9 +37,9 @@ public class UserController {
 
     @RequestMapping(value = "user/info/change/{id}",method = RequestMethod.POST)
     @ResponseBody
-    public  Result updateUserInfo(@PathVariable int id,String userName,String gender,String stateMessage)
+    public  Result updateUserInfo(@PathVariable int id, String userName, String gender, String stateMessage, String userImg)
     {
-        if(userService.updateUserInfo(id,userName,gender,stateMessage)>0)
+        if(userService.updateUserInfo(id,userName,gender,stateMessage,userImg)>0)
             return   Result.result(200,"用户信息修改成功",null);
         return   Result.result(500,"用户信息修改失败",null);
     }

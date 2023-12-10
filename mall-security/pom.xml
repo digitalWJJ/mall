@@ -15,8 +15,6 @@
     <description>mall-security</description>
 
     <dependencies>
-
-
         <dependency>
             <groupId>com.ouc</groupId>
             <artifactId>mall-mbg</artifactId>
