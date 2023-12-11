@@ -10,7 +10,7 @@ public class SearchModel {
 
     private String key;
 
-    private int id;
+    private int categoryId;
 
     public int getPageIndex() {
         return pageIndex;
@@ -37,10 +37,10 @@ public class SearchModel {
     }
 
     public int getId(){
-        return id;
+        return categoryId;
     }
 
     public void setId(int id){
-        this.id = id;
+        this.categoryId = id;
     }
 }

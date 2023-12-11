@@ -18,13 +18,11 @@ public class IndentServiceImpl implements IndentService {
     IndentMapper indentMapper;
     @Override
     public List<Indent> getindents(PageParam pageParam){
-        List<Indent> indents = CacheTool.getIndents(pageParam);
-        return indents;
+        return CacheTool.getIndents(pageParam);
     }
     @Override
     public Indent getindent(Integer id){
-        Indent indent = CacheTool.getIndent(id);
-        return indent;
+        return CacheTool.getIndent(id);
     }
     @Override
     public boolean deleteindent(Integer id){

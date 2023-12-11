@@ -21,25 +21,19 @@ public class ProductServiceImpl implements ProductService {
     ProductMapper productMapper;
     @Override
     public boolean addproduct(SplitProduct splitProduct){
-        Product product = ToproductUtil.toproduct(splitProduct);
-        return CacheTool.addProduct(product);
+        return CacheTool.addProduct(ToproductUtil.toproduct(splitProduct));
     }
     @Override
     public boolean updateproduct(SplitProduct splitProduct){
-        Product product = ToproductUtil.toproduct(splitProduct);
-        return CacheTool.updateProduct(product);
+        return CacheTool.updateProduct(ToproductUtil.toproduct(splitProduct));
     }
     @Override
     public List<SplitProduct> getproducts(PageParam pageParam){
-        List<Product> products = CacheTool.getProducts(pageParam);
-        List<SplitProduct> splitProducts = TosplitproductUtil.getSplitproducts(products);
-        return splitProducts;
+        return TosplitproductUtil.getSplitproducts(CacheTool.getProducts(pageParam));
     }
     @Override
     public SplitProduct getproduct(Integer id){
-        Product product = CacheTool.getProduct(id);
-        SplitProduct splitProduct = TosplitproductUtil.getsplitproduct(product);
-        return splitProduct;
+        return TosplitproductUtil.getsplitproduct(CacheTool.getProduct(id));
     }
     @Override
     public boolean deleteproduct(Integer id){
