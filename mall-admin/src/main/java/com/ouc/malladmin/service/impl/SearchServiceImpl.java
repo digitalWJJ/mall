@@ -26,9 +26,7 @@ public class SearchServiceImpl implements SearchService {
         criteria.andProductNameLike('%' + searchModel.getKey() + '%');
         example.setLimitStart((searchModel.getPageIndex()-1) * searchModel.getPageSize());
         example.setLimitSize(searchModel.getPageSize());
-        List<Product> productList= productMapper.selectByExample(example);
-        List<SplitProduct> splitProducts = TosplitproductUtil.getSplitproducts(productList);
-        return splitProducts;
+        return TosplitproductUtil.getSplitproducts(productMapper.selectByExample(example));
     }
     @Override
     public List<SplitProduct> searchbycategory(SearchModel searchModel){
@@ -38,9 +36,7 @@ public class SearchServiceImpl implements SearchService {
         criteria.andCategoryEqualTo(categorys[searchModel.getId()]);
         example.setLimitStart((searchModel.getPageIndex()-1) * searchModel.getPageSize());
         example.setLimitSize(searchModel.getPageSize());
-        List<Product> productList = productMapper.selectByExample(example);
-        List<SplitProduct> splitProducts = TosplitproductUtil.getSplitproducts(productList);
-        return splitProducts;
+        return TosplitproductUtil.getSplitproducts(productMapper.selectByExample(example));
     }
     @Override
     public List<SplitProduct> searchcombine(SearchModel searchModel){
@@ -51,9 +47,7 @@ public class SearchServiceImpl implements SearchService {
         criteria.andProductNameLike('%' + searchModel.getKey() + '%');
         example.setLimitStart((searchModel.getPageIndex()-1) * searchModel.getPageSize());
         example.setLimitSize(searchModel.getPageSize());
-        List<Product> productList = productMapper.selectByExample(example);
-        List<SplitProduct> splitProducts = TosplitproductUtil.getSplitproducts(productList);
-        return splitProducts;
+        return TosplitproductUtil.getSplitproducts(productMapper.selectByExample(example));
     }
     @Override
     public List<User> searchuser(SearchModel searchModel){
@@ -62,8 +56,6 @@ public class SearchServiceImpl implements SearchService {
         criteria.andUserNameLike('%' + searchModel.getKey() + '%');
         userExample.setLimitStart((searchModel.getPageIndex()-1) * searchModel.getPageSize());
         userExample.setLimitSize(searchModel.getPageSize());
-        List<User> users= userMapper.selectByExample(userExample);
-        return users;
+        return userMapper.selectByExample(userExample);
     }
-
 }
