@@ -9,7 +9,27 @@ public class ProductExample {
 
     protected boolean distinct;
 
+    protected Integer limitStart;
+
+    protected Integer limitSize;
+
     protected List<Criteria> oredCriteria;
+
+    public void setLimitStart(Integer limitStart) {
+        this.limitStart = limitStart;
+    }
+
+    public Integer getLimitStart() {
+        return limitStart;
+    }
+
+    public void setLimitSize(Integer limitSize) {
+        this.limitSize = limitSize;
+    }
+
+    public Integer getLimitSize() {
+        return limitSize;
+    }
 
     public ProductExample() {
         oredCriteria = new ArrayList<>();
@@ -1016,5 +1036,6 @@ public class ProductExample {
         protected Criterion(String condition, Object value, Object secondValue) {
             this(condition, value, secondValue, null);
         }
+
     }
 }

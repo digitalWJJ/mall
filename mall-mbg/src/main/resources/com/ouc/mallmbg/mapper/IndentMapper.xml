@@ -9,7 +9,7 @@
     <result column="product_id" jdbcType="INTEGER" property="productId" />
     <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
     <result column="amount" jdbcType="INTEGER" property="amount" />
-    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="indent_status" jdbcType="CHAR" property="indentStatus" />
     <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
     <result column="color" jdbcType="VARCHAR" property="color" />
@@ -74,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, receiver_name, commit_time, user_id, product_id, total_price, amount, status, 
+    id, receiver_name, commit_time, user_id, product_id, total_price, amount, indent_status, 
     address, phone_number, color, configuration
   </sql>
   <select id="selectByExample" parameterType="com.ouc.mallmbg.model.IndentExample" resultMap="BaseResultMap">
@@ -89,6 +89,9 @@
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitSize &gt;= 0">
+      limit #{limitStart} , #{limitSize}
     </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -116,11 +119,11 @@
     </selectKey>
     insert into indent (receiver_name, commit_time, user_id, 
       product_id, total_price, amount, 
-      status, address, phone_number, 
+      indent_status, address, phone_number, 
       color, configuration)
     values (#{receiverName,jdbcType=VARCHAR}, #{commitTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, 
       #{productId,jdbcType=INTEGER}, #{totalPrice,jdbcType=DECIMAL}, #{amount,jdbcType=INTEGER}, 
-      #{status,jdbcType=CHAR}, #{address,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
+      #{indentStatus,jdbcType=CHAR}, #{address,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
       #{color,jdbcType=VARCHAR}, #{configuration,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ouc.mallmbg.model.Indent">
@@ -147,8 +150,8 @@
       <if test="amount != null">
         amount,
       </if>
-      <if test="status != null">
-        status,
+      <if test="indentStatus != null">
+        indent_status,
       </if>
       <if test="address != null">
         address,
@@ -182,8 +185,8 @@
       <if test="amount != null">
         #{amount,jdbcType=INTEGER},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=CHAR},
+      <if test="indentStatus != null">
+        #{indentStatus,jdbcType=CHAR},
       </if>
       <if test="address != null">
         #{address,jdbcType=VARCHAR},
@@ -229,8 +232,8 @@
       <if test="row.amount != null">
         amount = #{row.amount,jdbcType=INTEGER},
       </if>
-      <if test="row.status != null">
-        status = #{row.status,jdbcType=CHAR},
+      <if test="row.indentStatus != null">
+        indent_status = #{row.indentStatus,jdbcType=CHAR},
       </if>
       <if test="row.address != null">
         address = #{row.address,jdbcType=VARCHAR},
@@ -258,7 +261,7 @@
       product_id = #{row.productId,jdbcType=INTEGER},
       total_price = #{row.totalPrice,jdbcType=DECIMAL},
       amount = #{row.amount,jdbcType=INTEGER},
-      status = #{row.status,jdbcType=CHAR},
+      indent_status = #{row.indentStatus,jdbcType=CHAR},
       address = #{row.address,jdbcType=VARCHAR},
       phone_number = #{row.phoneNumber,jdbcType=VARCHAR},
       color = #{row.color,jdbcType=VARCHAR},
@@ -288,8 +291,8 @@
       <if test="amount != null">
         amount = #{amount,jdbcType=INTEGER},
       </if>
-      <if test="status != null">
-        status = #{status,jdbcType=CHAR},
+      <if test="indentStatus != null">
+        indent_status = #{indentStatus,jdbcType=CHAR},
       </if>
       <if test="address != null">
         address = #{address,jdbcType=VARCHAR},
@@ -314,7 +317,7 @@
       product_id = #{productId,jdbcType=INTEGER},
       total_price = #{totalPrice,jdbcType=DECIMAL},
       amount = #{amount,jdbcType=INTEGER},
-      status = #{status,jdbcType=CHAR},
+      indent_status = #{indentStatus,jdbcType=CHAR},
       address = #{address,jdbcType=VARCHAR},
       phone_number = #{phoneNumber,jdbcType=VARCHAR},
       color = #{color,jdbcType=VARCHAR},

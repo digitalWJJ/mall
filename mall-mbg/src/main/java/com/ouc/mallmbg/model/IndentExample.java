@@ -12,6 +12,26 @@ public class IndentExample {
 
     protected List<Criteria> oredCriteria;
 
+    protected Integer limitStart;
+
+    protected Integer limitSize;
+
+    public void setLimitStart(Integer limitStart) {
+        this.limitStart = limitStart;
+    }
+
+    public Integer getLimitStart() {
+        return limitStart;
+    }
+
+    public void setLimitSize(Integer limitSize) {
+        this.limitSize = limitSize;
+    }
+
+    public Integer getLimitSize() {
+        return limitSize;
+    }
+
     public IndentExample() {
         oredCriteria = new ArrayList<>();
     }
@@ -536,73 +556,73 @@ public class IndentExample {
             return (Criteria) this;
         }
 
-        public Criteria andStatusIsNull() {
-            addCriterion("status is null");
+        public Criteria andIndentStatusIsNull() {
+            addCriterion("indent_status is null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIsNotNull() {
-            addCriterion("status is not null");
+        public Criteria andIndentStatusIsNotNull() {
+            addCriterion("indent_status is not null");
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(String value) {
-            addCriterion("status =", value, "status");
+        public Criteria andIndentStatusEqualTo(String value) {
+            addCriterion("indent_status =", value, "indentStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(String value) {
-            addCriterion("status <>", value, "status");
+        public Criteria andIndentStatusNotEqualTo(String value) {
+            addCriterion("indent_status <>", value, "indentStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(String value) {
-            addCriterion("status >", value, "status");
+        public Criteria andIndentStatusGreaterThan(String value) {
+            addCriterion("indent_status >", value, "indentStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(String value) {
-            addCriterion("status >=", value, "status");
+        public Criteria andIndentStatusGreaterThanOrEqualTo(String value) {
+            addCriterion("indent_status >=", value, "indentStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(String value) {
-            addCriterion("status <", value, "status");
+        public Criteria andIndentStatusLessThan(String value) {
+            addCriterion("indent_status <", value, "indentStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(String value) {
-            addCriterion("status <=", value, "status");
+        public Criteria andIndentStatusLessThanOrEqualTo(String value) {
+            addCriterion("indent_status <=", value, "indentStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLike(String value) {
-            addCriterion("status like", value, "status");
+        public Criteria andIndentStatusLike(String value) {
+            addCriterion("indent_status like", value, "indentStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotLike(String value) {
-            addCriterion("status not like", value, "status");
+        public Criteria andIndentStatusNotLike(String value) {
+            addCriterion("indent_status not like", value, "indentStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusIn(List<String> values) {
-            addCriterion("status in", values, "status");
+        public Criteria andIndentStatusIn(List<String> values) {
+            addCriterion("indent_status in", values, "indentStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<String> values) {
-            addCriterion("status not in", values, "status");
+        public Criteria andIndentStatusNotIn(List<String> values) {
+            addCriterion("indent_status not in", values, "indentStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(String value1, String value2) {
-            addCriterion("status between", value1, value2, "status");
+        public Criteria andIndentStatusBetween(String value1, String value2) {
+            addCriterion("indent_status between", value1, value2, "indentStatus");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(String value1, String value2) {
-            addCriterion("status not between", value1, value2, "status");
+        public Criteria andIndentStatusNotBetween(String value1, String value2) {
+            addCriterion("indent_status not between", value1, value2, "indentStatus");
             return (Criteria) this;
         }
 
