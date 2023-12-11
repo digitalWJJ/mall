@@ -39,7 +39,6 @@ public class ResponseBodyEncrypt implements ResponseBodyAdvice<Object> {
         response.getHeaders().set("ServerPublicKey", RsaUtil.getPublicKey()); // 在响应头中设置服务器端的公钥
         String jsonString = JSONUtil.toJsonStr(body);
         String aesKey = AesUtil.getKey(); // aesKey 每一次 get 都是新的 所以需要先缓存
-        System.out.println(aesKey); // TODO 打印输出
         EnDeModel enDeModel = new EnDeModel();
         try {
             String load = AesUtil.encrypt(jsonString, aesKey);

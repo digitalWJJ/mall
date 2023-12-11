@@ -5,10 +5,7 @@ import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
 import java.io.ByteArrayOutputStream;
-import java.security.Key;
-import java.security.KeyFactory;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
+import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -188,5 +185,24 @@ public class RsaUtil {
         byte[] toByteArray = out.toByteArray();
         out.close();
         return toByteArray;
+    }
+
+    /**
+     * 验证签名
+     * */
+    public static boolean verifySignature(byte[] msg, byte[] signature, byte[] publicKeyBytes) throws Exception {
+        // 创建PublicKey对象
+        PublicKey publicKey = KeyFactory.getInstance("RSA")
+                .generatePublic(new X509EncodedKeySpec(publicKeyBytes));
+
+        // 创建Signature对象并初始化为验证模式
+        Signature signature01 = Signature.getInstance("SHA256withRSA");
+        signature01.initVerify(publicKey);
+
+        // 更新Signature对象以包含消息
+        signature01.update(msg);
+
+        // 验证签名
+        return signature01.verify(signature);
     }
 }
