@@ -62,7 +62,7 @@ public class AfterSignInAspect {
         String jsonStrUser =  strUser.replace("[", "{")
                 .replace( "]", "}")
                 .replace("=", ":")
-                .replace("User","") // TODO 找个正则表达式 匹配 User 这个单词
+                .replace("User","")
                 .replaceAll("\r|\n|\\s*", "");
         return JSONUtil.toBean(jsonStrUser, User.class);
     }

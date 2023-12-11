@@ -14,7 +14,7 @@ public class CrossDomainInterceptor implements HandlerInterceptor {
         response.setHeader("Access-Control-Allow-Headers", "*");
         response.setHeader("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
         response.setHeader("Access-Control-Max-Age", "3600");
-        return true;
+        return !("OPTIONS".equals(request.getMethod())); // TODO 优化一下对于options的处理
     }
 
     @Override

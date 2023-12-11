@@ -22,6 +22,7 @@ import com.ouc.mallsecurity.service.SignService;
 import com.ouc.mallsecurity.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,7 @@ public class SignServiceImpl implements SignService {
     @Value("${code.expiration}")
     private Long expiration;
 
-    @Autowired
+    @Resource(type = com.ouc.mallsecurity.service.impl.UserServiceImpl.class)
     private UserService userService;
 
     @Autowired
